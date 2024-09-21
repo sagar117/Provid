@@ -1,0 +1,22 @@
+{
+  "name": "provid",
+  "version": "1.0.0",
+  "description": "Record product functionality and help users",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagar117/Provid.git"
+  },
+  "keywords": [
+    "provid"
+  ],
+  "author": "sagar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sagar117/Provid/issues"
+  },
+  "homepage": "https://github.com/sagar117/Provid#readme"
+}

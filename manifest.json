@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Feature Recorder",
+  "version": "1.0",
+  "description": "Record user interactions with product features and guide users on how to use them.",
+  "permissions": [
+      "debugger",
+      "activeTab",
+      "storage",
+      "scripting",
+      "downloads"
+  ],
+  "background": {
+      "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ],
+
+  "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+          "16": "video-camera.png",
+          "48": "video-camera.png",
+          "128": "video-camera.png"
+      }
+  },
+  "icons": {
+      "16": "video-camera.png",
+      "48": "video-camera.png",
+      "128": "video-camera.png"
+  },
+  "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
