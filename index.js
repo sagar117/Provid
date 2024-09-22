@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose'); // For MongoDB connection
 const authRoutes = require('./routes/auth'); // Import authentication routes
-const guideRoutes = require('./routes/guides'); // Import guide management routes
+const guideRoutes = require('./routes/dashoard'); // Import guide management routes
 
 const app = express();
 
@@ -52,7 +52,7 @@ app.get('/recordings/:feature', (req, res) => {
 
 // Use authentication and guide routes
 app.use('/api/auth', authRoutes);
-app.use('/api/guides', guideRoutes);
+app.use('/api/dashboard', guideRoutes);
 
 // Start the server
 app.listen(3000, () => console.log('Server running on http://localhost:3000'));
