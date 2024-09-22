@@ -1,0 +1,70 @@
+{
+    "description": "Patient add flow",
+    "events": [
+        {
+            "target": "INPUT",
+            "timestamp": 1727002504390,
+            "type": "click",
+            "x": 131,
+            "xpath": "id(\"first-name\")",
+            "y": 399
+        },
+        {
+            "target": "INPUT",
+            "timestamp": 1727002504392,
+            "type": "click",
+            "x": 131,
+            "xpath": "id(\"first-name\")",
+            "y": 399
+        },
+        {
+            "target": "INPUT",
+            "timestamp": 1727002506613,
+            "type": "click",
+            "x": 156,
+            "xpath": "id(\"last-name\")",
+            "y": 441
+        },
+        {
+            "target": "INPUT",
+            "timestamp": 1727002509039,
+            "type": "click",
+            "x": 135,
+            "xpath": "id(\"dob\")",
+            "y": 476
+        },
+        {
+            "target": "INPUT",
+            "timestamp": 1727002515725,
+            "type": "click",
+            "x": 146,
+            "xpath": "id(\"email\")",
+            "y": 526
+        },
+        {
+            "target": "INPUT",
+            "timestamp": 1727002519710,
+            "type": "click",
+            "x": 147,
+            "xpath": "id(\"phone\")",
+            "y": 560
+        },
+        {
+            "target": "TEXTAREA",
+            "timestamp": 1727002525197,
+            "type": "click",
+            "x": 144,
+            "xpath": "id(\"address\")",
+            "y": 611
+        },
+        {
+            "target": "BUTTON",
+            "timestamp": 1727002527518,
+            "type": "click",
+            "x": 55,
+            "xpath": "id(\"patient-form\")/button[1]",
+            "y": 658
+        }
+    ],
+    "name": "Add Patient"
+}

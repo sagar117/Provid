@@ -3,9 +3,10 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("Feature Recorder extension installed.");
 });
 
-
 // Listen for messages from the popup or content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log("Message received in background:", message); // Add this line
+
   if (message.action === "startRecording") {
     console.log("Recording started.");
 
@@ -14,15 +15,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (tabs.length > 0 && tabs[0].id !== -1) {
         chrome.scripting.executeScript({
           target: { tabId: tabs[0].id },
-          function: startRecording
+          function: startRecording, // This should be in content.js
+        }, () => {
+          sendResponse({ status: "Recording started." });
         });
       } else {
         console.error("No active tab found or invalid tab ID.");
+        sendResponse({ status: "No active tab found or invalid tab ID." });
       }
     });
 
-
-    sendResponse({ status: "Recording started." });
+    return true;  // Indicate that the response is asynchronous
   } else if (message.action === "stopRecording") {
     console.log("Recording stopped.");
 
@@ -31,38 +34,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (tabs.length > 0 && tabs[0].id !== -1) {
         chrome.scripting.executeScript({
           target: { tabId: tabs[0].id },
-          function: stopRecording
+          function: stopRecording, // This should be in content.js
+        }, () => {
+          sendResponse({ status: "Recording stopped." });
         });
       } else {
         console.error("No active tab found or invalid tab ID.");
-      }
-    });
-
-
-    sendResponse({ status: "Recording stopped." });
-  } else if (message.action === "saveRecording") {
-    console.log("Saving recording:", message.data);
-
-    // Convert the recorded data to JSON string format
-    const blob = new Blob([JSON.stringify(message.data)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    // Use chrome.downloads API to download the file
-    chrome.downloads.download({
-      url: url,
-      filename: `recording_${Date.now()}.json`, // Create a unique filename
-      saveAs: true  // This will prompt the user where to save the file
-    }, (downloadId) => {
-      if (downloadId) {
-        console.log("Recording saved with downloadId:", downloadId);
-        sendResponse({ status: "Recording saved." });
-      } else {
-        console.error("Error saving the recording.");
-        sendResponse({ status: "Error saving the recording." });
+        sendResponse({ status: "No active tab found or invalid tab ID." });
       }
     });
 
     return true;  // Indicate that the response is asynchronous
+  }else if (message.action === "saveRecording") {
+    console.log("Saving recording:", message.data);
+    
+    // Save the recorded data to Chrome storage
+    chrome.storage.local.set({ recordingData: message.data }, () => {
+      console.log("Recording saved:", message.data);
+      sendResponse({ status: "Recording saved." });
+    });
+
+    return true;  // Indicate that the response is asynchronouss
+
   } else {
     sendResponse({ status: "Unknown action." });
   }

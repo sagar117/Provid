@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/sagar117/Provid/issues"
   },
-  "homepage": "https://github.com/sagar117/Provid#readme"
+  "homepage": "https://github.com/sagar117/Provid#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0"
+  }
 }
