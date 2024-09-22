@@ -21,6 +21,9 @@
   "homepage": "https://github.com/sagar117/Provid#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "mongodb": "^6.9.0",
+    "mongoose": "^8.6.3",
+    "bson": "^4.0.0"
   }
 }

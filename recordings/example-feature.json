@@ -1,70 +1,69 @@
 {
-    "description": "Patient add flow",
+    "description": "Patient addition",
     "events": [
         {
             "target": "INPUT",
-            "timestamp": 1727002504390,
+            "timestamp": 1727007184461,
             "type": "click",
-            "x": 131,
+            "x": 228,
             "xpath": "id(\"first-name\")",
-            "y": 399
+            "y": 406,
+            "text": "Click here to enter the patient's first name."
         },
         {
             "target": "INPUT",
-            "timestamp": 1727002504392,
+            "timestamp": 1727007189354,
             "type": "click",
-            "x": 131,
-            "xpath": "id(\"first-name\")",
-            "y": 399
-        },
-        {
-            "target": "INPUT",
-            "timestamp": 1727002506613,
-            "type": "click",
-            "x": 156,
+            "x": 133,
             "xpath": "id(\"last-name\")",
-            "y": 441
+            "y": 440,
+            "text": "Click here to enter the patient's last name."
         },
         {
             "target": "INPUT",
-            "timestamp": 1727002509039,
+            "timestamp": 1727007192429,
             "type": "click",
-            "x": 135,
+            "x": 127,
             "xpath": "id(\"dob\")",
-            "y": 476
+            "y": 477,
+            "text": "Click here to enter the patient's date of birth."
         },
         {
             "target": "INPUT",
-            "timestamp": 1727002515725,
+            "timestamp": 1727007197150,
             "type": "click",
-            "x": 146,
+            "x": 127,
             "xpath": "id(\"email\")",
-            "y": 526
+            "y": 515,
+            "text": "Click here to enter the patient's email address."
         },
         {
             "target": "INPUT",
-            "timestamp": 1727002519710,
+            "timestamp": 1727007202312,
             "type": "click",
-            "x": 147,
+            "x": 121,
             "xpath": "id(\"phone\")",
-            "y": 560
+            "y": 554,
+            "text": "Click here to enter the patient's phone number."
         },
         {
             "target": "TEXTAREA",
-            "timestamp": 1727002525197,
+            "timestamp": 1727007204695,
             "type": "click",
-            "x": 144,
+            "x": 109,
             "xpath": "id(\"address\")",
-            "y": 611
+            "y": 607,
+            "text": "Click here to enter the patient's address."
         },
         {
             "target": "BUTTON",
-            "timestamp": 1727002527518,
+            "timestamp": 1727007208433,
             "type": "click",
-            "x": 55,
+            "x": 68,
             "xpath": "id(\"patient-form\")/button[1]",
-            "y": 658
+            "y": 652,
+            "text": "Click here to submit the patient form."
         }
     ],
-    "name": "Add Patient"
+    "name": "Add Patient 2"
 }
