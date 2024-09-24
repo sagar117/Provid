@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const featureName = featureScript.getAttribute('data-feature');  // Safely access the data attribute
 
   // Fetch the recorded JSON data from your server based on the feature name
-  fetch(`${config.apiBaseUrl}/recordings/${featureName}`) 
+  fetch(`${apiBaseUrl}/recordings/${featureName}`) 
     .then(response => {
       if (!response.ok) {
         throw new Error(`Failed to load feature guide: ${response.statusText}`);
