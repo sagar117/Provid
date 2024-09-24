@@ -33,12 +33,12 @@ app.get('/demo', (req, res) => {
 
 // Serve the login page
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.sendFile(path.join(__dirname, '/', 'login.html'));
 });
 
 // Serve the register page
 app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'register.html'));
+  res.sendFile(path.join(__dirname, '/', 'register.html'));
 });
 
 // Upload recorded events
