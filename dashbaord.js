@@ -3,7 +3,7 @@ document.getElementById('guideForm').addEventListener('submit', function (e) {
     const name = document.getElementById('guideName').value;
     const description = document.getElementById('guideDescription').value;
 
-    fetch('http://localhost:3000/api/guides', {
+    fetch('http://0.0.0.0:3000/api/guides', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
