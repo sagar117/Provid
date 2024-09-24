@@ -8,6 +8,11 @@ const authRoutes = require('./routes/auth'); // Import authentication routes
 const config = require('./config/config');
 console.log(config.baseUrl);
 const app = express();
+const { router: authRoutes, authenticateJWT } = require('./routes/auth'); // Importing auth routes
+
+
+app.use('/api/auth', authRoutes); // Register the authentication routes
+
 
 // Enable CORS
 app.use(cors());
@@ -61,8 +66,6 @@ app.get('/recordings/:feature', (req, res) => {
   res.sendFile(path.join(__dirname, `/recordings/${featureName}.json`));
 });
 
-// Use authentication and guide routes
-app.use('/api/auth', authRoutes);
 // app.use('/api/dashboard', guideRoutes);
 
 // Start the server
