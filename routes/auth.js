@@ -50,4 +50,17 @@ router.post('/login', async (req, res) => {
     res.json({ message: 'User logged in', token });
 });
 
-module.exports = router;
+// Middleware to authenticate requests
+const authenticateJWT = (req, res, next) => {
+    const token = req.header('Authorization')?.split(' ')[1]; // Extract token from Authorization header
+    if (!token) return res.sendStatus(403); // Forbidden
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403); // Forbidden
+        req.user = user;
+        next();
+    });
+};
+
+// Export both the router and the authenticateJWT function
+module.exports = { router, authenticateJWT };
