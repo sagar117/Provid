@@ -1,4 +1,4 @@
-import config from './config/config';
+const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
 document.addEventListener('DOMContentLoaded', () => {
   // Access the script element and get the data-feature attribute
