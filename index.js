@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose'); // For MongoDB connection
 const authRoutes = require('./routes/auth'); // Import authentication routes
-const guideRoutes = require('./routes/dashoard'); // Import guide management routes
+const guideRoutes = require('./routes/dashboard'); // Import guide management routes
 
 const app = express();
 
