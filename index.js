@@ -31,6 +31,16 @@ app.get('/demo', (req, res) => {
   res.sendFile(path.join(__dirname, '/', 'demo.html'));
 });
 
+// Serve the login page
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Serve the register page
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
 // Upload recorded events
 app.post('/upload', (req, res) => {
   const { name, description, events } = req.body;
