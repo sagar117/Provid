@@ -4,8 +4,8 @@ const router = express.Router();
 require('dotenv').config();
 
 // Assuming you have a database model for Organization and User
-const Organization = require('../models/Organization'); // Your ORM model for Organization
-const User = require('../models/User'); // Your ORM model for User
+const Organization = require('../models/organization.model'); // Your ORM model for Organization
+const User = require('../models/user.model'); // Your ORM model for User
 
 // Create Organization and User route
 router.post('/create', async (req, res) => {
