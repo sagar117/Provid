@@ -7,7 +7,7 @@ require('dotenv').config(); // Load environment variables
 
 // const config = require('./config/config'); // Configuration file
 // const { router: authRoutes, authenticateJWT } = require('./routes/auth'); // Importing auth routes
-// const orgRoutes = require('./routes/org'); // Import organization routes
+const orgRoutes = require('./routes/org'); // Import organization routes
 
 const app = express();
 
@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/yourdbnam
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Register the authentication routes
-app.use('/api/auth', authRoutes); 
+// app.use('/api/auth', authRoutes); 
 // Register the organization routes
 app.use('/api/orgs', orgRoutes); 
 
