@@ -1,10 +1,12 @@
+import config from './config';
+
 document.addEventListener('DOMContentLoaded', () => {
   // Access the script element and get the data-feature attribute
   const featureScript = document.getElementById('guide-script');
   const featureName = featureScript.getAttribute('data-feature');  // Safely access the data attribute
 
   // Fetch the recorded JSON data from your server based on the feature name
-  fetch(`http://0.0.0.0:3000/recordings/${featureName}`)
+  fetch(`${config.apiBaseUrl}/recordings/${featureName}`) 
     .then(response => {
       if (!response.ok) {
         throw new Error(`Failed to load feature guide: ${response.statusText}`);
