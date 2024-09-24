@@ -49,6 +49,12 @@ app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, '/', 'register.html'));
 });
 
+// Create org
+app.get('/create-org', (req, res) => {
+  res.sendFile(path.join(__dirname, '/', 'create-org.html'));
+});
+
+
 // Upload recorded events
 app.post('/upload', (req, res) => {
   const { name, description, events } = req.body;

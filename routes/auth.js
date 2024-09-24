@@ -50,6 +50,24 @@ router.post('/login', async (req, res) => {
     res.json({ message: 'User logged in', token });
 });
 
+// Get user by username
+router.get('/user/:username', async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        const user = await User.findOne({ username }).select('-password'); // Exclude password from the result
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+
 // Middleware to authenticate requests
 const authenticateJWT = (req, res, next) => {
     const token = req.header('Authorization')?.split(' ')[1]; // Extract token from Authorization header
