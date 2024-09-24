@@ -1,4 +1,4 @@
-import config from './config';
+import config from './config/config';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Access the script element and get the data-feature attribute

@@ -1,4 +1,4 @@
-import config from './config';
+import config from './config/config';
 document.getElementById('registerForm').addEventListener('submit', function (e) {
     e.preventDefault();
     const name = document.getElementById('name').value;
