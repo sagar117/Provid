@@ -52,7 +52,7 @@ app.get('/recordings/:feature', (req, res) => {
 
 // Use authentication and guide routes
 app.use('/api/auth', authRoutes);
-app.use('/api/dashboard', guideRoutes);
+// app.use('/api/dashboard', guideRoutes);
 
 // Start the server
 app.listen(3000, () => console.log('Server running on http://localhost:3000'));
