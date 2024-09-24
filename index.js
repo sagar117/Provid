@@ -3,16 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose'); // For MongoDB connection
-// const authRoutes = require('./routes/auth'); // Import authentication routes
-// const guideRoutes = require('./routes/dashboard'); // Import guide management routes
-const config = require('./config/config');
-console.log(config.baseUrl);
-const app = express();
+require('dotenv').config(); // Load environment variables
+
+const config = require('./config/config'); // Configuration file
 const { router: authRoutes, authenticateJWT } = require('./routes/auth'); // Importing auth routes
+const orgRoutes = require('./routes/org'); // Import organization routes
 
-
-app.use('/api/auth', authRoutes); // Register the authentication routes
-
+const app = express();
 
 // Enable CORS
 app.use(cors());
@@ -20,9 +17,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '/')));
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/yourdbname', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/yourdbname', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+// Register the authentication routes
+app.use('/api/auth', authRoutes); 
+// Register the organization routes
+app.use('/api/orgs', orgRoutes); 
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -66,7 +68,5 @@ app.get('/recordings/:feature', (req, res) => {
   res.sendFile(path.join(__dirname, `/recordings/${featureName}.json`));
 });
 
-// app.use('/api/dashboard', guideRoutes);
-
 // Start the server
-app.listen(3000,'0.0.0.0', () => console.log('Server running on http://0.0.0.0:3000'));
+app.listen(3000, '0.0.0.0', () => console.log('Server running on http://0.0.0.0:3000'));

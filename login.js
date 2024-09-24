@@ -1,23 +1,31 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
-document.getElementById('loginForm').addEventListener('submit', function (e) {
+
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
-    const email = document.getElementById('email').value;
+    const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch(`${apiBaseUrl}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('Login failed');
-        return response.json();
-    })
-    .then(data => {
-        localStorage.setItem('token', data.token); // Store the JWT token
-        window.location.href = '/demo'; // Redirect to the demo page
-    })
-    .catch(error => console.error('Error:', error));
-});
+    try {
+        const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        });
 
+        const data = await response.json();
+        document.getElementById('message').innerText = data.message;
+
+        if (data.token) {
+            // Store the token in localStorage or handle it as needed
+            localStorage.setItem('token', data.token);
+            // Redirect to another page if needed
+            // window.location.href = '/dashboard';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = 'An error occurred. Please try again.';
+    }
+});
