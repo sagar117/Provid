@@ -6,7 +6,7 @@ const mongoose = require('mongoose'); // For MongoDB connection
 require('dotenv').config(); // Load environment variables
 
 // const config = require('./config/config'); // Configuration file
-const { router: authRoutes, authenticateJWT } = require('./routes/auth'); // Importing auth routes
+// const { router: authRoutes, authenticateJWT } = require('./routes/auth'); // Importing auth routes
 // const orgRoutes = require('./routes/org'); // Import organization routes
 
 const app = express();
