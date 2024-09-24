@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose'); // For MongoDB connection
-const authRoutes = require('./routes/auth'); // Import authentication routes
+// const authRoutes = require('./routes/auth'); // Import authentication routes
 // const guideRoutes = require('./routes/dashboard'); // Import guide management routes
 const config = require('./config/config');
 console.log(config.baseUrl);
