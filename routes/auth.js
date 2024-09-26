@@ -11,21 +11,43 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // Registration route
 router.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, email, org_id } = req.body;
 
-    // Check if the user already exists
-    const existingUser = users.find(user => user.username === username);
-    if (existingUser) {
-        return res.status(400).json({ message: 'User already exists' });
+    // Validate the input fields
+    if (!username || !password || !email || !org_id) {
+        return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    try {
+        // Check if the organization exists
+        const organization = await Org.findById(org_id);
+        if (!organization) {
+            return res.status(404).json({ message: 'Organization not found' });
+        }
 
-    // Store the new user
-    users.push({ username, password: hashedPassword });
+        // Check if the user already exists by username or email
+        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
 
-    res.status(201).json({ message: 'User registered' });
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create the new user and associate with the organization
+        const newUser = new User({
+            username,
+            password: hashedPassword,
+            email,
+            org: org_id // Assuming 'org' field in User model refers to organization
+        });
+
+        await newUser.save();
+
+        res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error registering user', error });
+    }
 });
 
 // Login route
