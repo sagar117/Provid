@@ -2,7 +2,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
 
 
 
-document.getElementById('registerForm').addEventListener('submit', async function (e) {
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
