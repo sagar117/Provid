@@ -26,6 +26,9 @@ exports.register = async (req, res) => {
 
     try {
         await user.save();
+        // Inside your registration logic in auth.controller.js
+        console.log('New user created:', { username, hashedPassword });
+
         res.status(201).json({ message: 'User registered successfully', user });
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error });
