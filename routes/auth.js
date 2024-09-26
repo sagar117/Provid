@@ -9,7 +9,6 @@ const users = []; // In-memory user storage
 // Secret key for JWT
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Registration route
 router.post('/register', async (req, res) => {
     const { username, password, email, org_id } = req.body;
 
@@ -31,7 +30,12 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash the password
+        // Hash the password (Make sure password is not empty)
+        if (!password) {
+            return res.status(400).json({ message: 'Password cannot be empty' });
+        }
+        
+        // Properly hash the password with salt rounds (10)
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create the new user and associate with the organization
@@ -46,9 +50,11 @@ router.post('/register', async (req, res) => {
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
+        console.error('Error:', error); // Log error for debugging
         res.status(500).json({ message: 'Error registering user', error });
     }
 });
+
 
 // Login route
 router.post('/login', async (req, res) => {
