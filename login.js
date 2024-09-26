@@ -1,27 +1,37 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
-
-
 document.getElementById('loginForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the form from submitting the traditional way
+
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const email = document.getElementById('email').value;
-    const org_id = document.getElementById('org_id').value;
+
+    const payload = { username, password };
 
     try {
-        const response = await fetch(`${apiBaseUrl}/api/auth/register`, {
+        const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password, email, org_id }),
+            body: JSON.stringify(payload)
         });
 
         const data = await response.json();
-        document.getElementById('message').innerText = data.message;
+
+        if (response.ok) {
+            // Login was successful
+            alert('Login successful!');
+            // Save token in localStorage or cookie
+            localStorage.setItem('token', data.token);
+            // Redirect user to dashboard or homepage
+            window.location.href = '/dashboard.html';
+        } else {
+            // Handle login failure
+            alert(data.message || 'Login failed');
+        }
     } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('message').innerText = 'An error occurred. Please try again.';
+        console.error('Error during login:', error);
+        alert('An error occurred while trying to log in. Please try again.');
     }
 });
