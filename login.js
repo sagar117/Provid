@@ -9,6 +9,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     const payload = { username, password };
 
     try {
+        console.log("Yaha tak aaya");
         const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
             method: 'POST',
             headers: {
