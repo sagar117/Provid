@@ -72,11 +72,35 @@ router.post('/login', async (req, res) => {
         return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Generate a JWT token
-    const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+    const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ username: user.username }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
 
-    res.json({ message: 'User logged in', token });
+    // Save the refresh token in the user’s record (optional)
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    res.json({ accessToken, refreshToken });
+
 });
+// Token refresh route
+router.post('/refresh-token', (req, res) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) return res.status(401).json({ message: 'No refresh token provided' });
+
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, user) => {
+        if (err) return res.status(403).json({ message: 'Invalid refresh token' });
+
+        const dbUser = await User.findOne({ username: user.username });
+        if (!dbUser || dbUser.refreshToken !== refreshToken) {
+            return res.status(403).json({ message: 'Refresh token does not match' });
+        }
+
+        const newAccessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' });
+        res.json({ accessToken: newAccessToken });
+    });
+});
+
+
 
 // Get a user by ID
 router.get('/users/:id', async (req, res) => {

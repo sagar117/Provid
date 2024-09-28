@@ -54,6 +54,36 @@ app.get('/create-org', (req, res) => {
   res.sendFile(path.join(__dirname, '/', 'create-org.html'));
 });
 
+router.post('/refresh-token', async (req, res) => {
+  const { refreshToken } = req.body;
+
+  // Check if a refresh token is provided
+  if (!refreshToken) {
+      return res.status(401).json({ message: 'No refresh token provided' });
+  }
+
+  // Verify the refresh token
+  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, user) => {
+      if (err) {
+          return res.status(403).json({ message: 'Invalid refresh token' });
+      }
+
+      // (Optional) Check if the refresh token matches the one stored in the database
+      const dbUser = await User.findOne({ username: user.username });
+      if (dbUser.refreshToken !== refreshToken) {
+          return res.status(403).json({ message: 'Refresh token does not match' });
+      }
+
+      // Generate a new access token
+      const newAccessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' });
+
+      res.json({
+          accessToken: newAccessToken
+      });
+  });
+});
+
+
 
 // Upload recorded events
 app.post('/upload', (req, res) => {

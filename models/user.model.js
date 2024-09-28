@@ -8,9 +8,13 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     isActive: { type: Boolean, default: true }, // Indicate if the user is active
     role: { type: String, enum: ['admin', 'user'], default: 'user' }, // User role (optional)
+    refreshToken: { type: String }  // Add refreshToken field
+
     // Add any other fields necessary for your user model
 });
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
+
+
