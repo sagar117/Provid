@@ -14,6 +14,7 @@ document.getElementById('orgForm').addEventListener('submit', async function (e)
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // Include token if necessary
             },
             body: JSON.stringify({
                 orgName,
@@ -25,9 +26,9 @@ document.getElementById('orgForm').addEventListener('submit', async function (e)
                 },
             }),
         });
-        console.log("Resone data:",Response);
 
         const data = await response.json();
+        console.log("data:",data);
         document.getElementById('message').innerText = data.message;
     } catch (error) {
         console.error('Error:', error);

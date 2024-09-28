@@ -25,6 +25,7 @@ router.post('/create', async (req, res) => {
             email: user.email,
             org_id: organization._id, // Link user to the organization
         });
+        console.log(res);
 
         res.status(201).json({ message: 'Organization and User created successfully.' });
     } catch (error) {
