@@ -1,5 +1,5 @@
-const Org = require('../models/Organization');  // Assuming you have an Org model
-const User = require('../models/User');  // Assuming you have a User model
+const Org = require('../models/organization.model');  // Assuming you have an Org model
+const User = require('../models/user.model');  // Assuming you have a User model
 const jwt = require('jsonwebtoken');
 require('dotenv').config();  // To use the JWT_SECRET from environment variables
 
