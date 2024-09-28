@@ -9,6 +9,7 @@ document.getElementById('orgForm').addEventListener('submit', async function (e)
     const userEmail = document.getElementById('userEmail').value;
 
     try {
+        console.log("Yaha ak aaya");
         const response = await fetch(`${apiBaseUrl}/api/orgs/create`, {
             method: 'POST',
             headers: {
@@ -24,6 +25,7 @@ document.getElementById('orgForm').addEventListener('submit', async function (e)
                 },
             }),
         });
+        console.log("Resone data:",Response);
 
         const data = await response.json();
         document.getElementById('message').innerText = data.message;
