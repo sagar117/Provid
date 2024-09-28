@@ -59,6 +59,7 @@ router.post('/register', async (req, res) => {
 // Login route
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    try{
 
     // Find the user
     const user = users.find(user => user.username === username);
@@ -80,6 +81,11 @@ router.post('/login', async (req, res) => {
     await user.save();
 
     res.json({ accessToken, refreshToken });
+} catch (error){
+    res.status(500).json({ message: 'Something went wrong', error });
+
+
+}
 
 });
 // Token refresh route
@@ -98,6 +104,7 @@ router.post('/refresh-token', (req, res) => {
         const newAccessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' });
         res.json({ accessToken: newAccessToken });
     });
+
 });
 
 

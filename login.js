@@ -24,6 +24,9 @@ document.getElementById('loginForm').addEventListener('submit', async function (
             alert('Login successful!');
             // Save token in localStorage or cookie
             localStorage.setItem('token', data.token);
+            sessionStorage.setItem('refreshToken', data.refreshToken);
+            console.log("Login Succesfull ");
+
             // Redirect user to dashboard or homepage
             window.location.href = '/dashboard.html';
         } else {
