@@ -16,7 +16,7 @@ router.post('/create', async (req, res) => {
         const organization = await Organization.create({ name: orgName, email: orgEmail });
 
         // Hash the user password
-        const hashedPassword = await bcrypt.hash(user.password, 10);
+        const hashedPassword = await bcrypt.hash(user.password, saltRounds);
 
         // Create user
         await User.create({
