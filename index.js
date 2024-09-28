@@ -40,7 +40,7 @@ app.get('/demo', (req, res) => {
 });
 
 // Serve the login page
-app.get('/login', (req, res) => {
+app.get('/login', authenticateJWT,(req, res) => {
   res.sendFile(path.join(__dirname, '/', 'login.html'));
 });
 
