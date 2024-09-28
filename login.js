@@ -18,6 +18,9 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         });
 
         const data = await response.json();
+        
+        console.log("Response status:", response.status);  // Log response status
+        console.log("Response data:", data);  // Log the entire response data
 
         if (response.ok) {
             // Login was successful
@@ -25,7 +28,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
             // Save token in localStorage or cookie
             localStorage.setItem('token', data.token);
             sessionStorage.setItem('refreshToken', data.refreshToken);
-            console.log("Login Succesfull ");
+            console.log("Login Successful");
 
             // Redirect user to dashboard or homepage
             window.location.href = '/dashboard.html';
