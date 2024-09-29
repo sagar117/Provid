@@ -78,6 +78,10 @@ document.getElementById('login-btn').addEventListener('click', async () => {
         alert('Login successful!');
         // Save token in localStorage or session storage
         localStorage.setItem('token', data.token);
+        const authToken = data.token;
+        chrome.storage.local.set({ authToken: authToken }, function() {
+          console.log('Auth token is saved.');
+        });
         sessionStorage.setItem('refreshToken', data.refreshToken);
         showRecorderSection();
 

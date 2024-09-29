@@ -13,8 +13,10 @@ chrome.storage.local.get('recordingData', async (result) => {
         const events = result.recordingData.events || [];
 
         // Fetch the token from local storage
-        chrome.storage.local.get(['token'], async (result) => {
-            const token = result.token;
+        chrome.storage.local.get(['authToken'], async (result) => {
+            const token = result.authToken;
+            console.log('Auth token retrieved:', token);
+
         // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
 
             if (!token) {
