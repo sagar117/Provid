@@ -1,52 +1,51 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
   // Access the script element and get the data-feature attribute
   const featureScript = document.getElementById('guide-script');
-  const featureName = featureScript.getAttribute('data-feature');  // Safely access the data attribute
+  const featureName = featureScript?.getAttribute('data-feature');  // Safely access the data attribute
 
-  // Fetch the recorded JSON data from your server based on the feature name
-  fetch(`${apiBaseUrl}/recordings/${featureName}`) 
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to load feature guide: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Fetched data:', data);  // Log the fetched data
+  if (featureName) {
+    // Fetch the recorded JSON data from your server based on the feature name
+    fetch(`${apiBaseUrl}/recordings/${featureName}`) 
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to load feature guide: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched data:', data);  // Log the fetched data
 
-      if (!data || !data.events || !Array.isArray(data.events)) {
-        console.error('Invalid data format or no events found:', data);
-        return;
-      }
+        if (!data || !data.events || !Array.isArray(data.events)) {
+          console.error('Invalid data format or no events found:', data);
+          return;
+        }
 
-      const guideButton = document.createElement('button');
-      guideButton.innerText = 'Guide Me';
-      guideButton.style.position = 'fixed';
-      guideButton.style.bottom = '20px';
-      guideButton.style.right = '20px';
-      guideButton.style.zIndex = '9999';
+        const guideButton = document.createElement('button');
+        guideButton.innerText = 'Guide Me';
+        guideButton.style.position = 'fixed';
+        guideButton.style.bottom = '20px';
+        guideButton.style.right = '20px';
+        guideButton.style.zIndex = '9999';
 
-      guideButton.addEventListener('click', () => {
-        console.log('Guide button clicked, starting guide with events:', data.events);
-        startGuide(data.events);
+        guideButton.addEventListener('click', () => {
+          console.log('Guide button clicked, starting guide with events:', data.events);
+          startGuide(data.events);
+        });
+
+        document.body.appendChild(guideButton);
+      })
+      .catch(error => {
+        console.error('Error fetching the feature guide:', error);
       });
+  }
 
-      document.body.appendChild(guideButton);
-    })
-    .catch(error => {
-      console.error('Error fetching the feature guide:', error);
-    });
-});
-
-    
-    // Fetching guide list and setting data-feature
-    // const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
-
-    document.getElementById('fetch-guides').addEventListener('click', async function() {
+  // Fetching guide list and setting data-feature
+  const fetchGuidesButton = document.getElementById('fetch-guides');
+  
+  if (fetchGuidesButton) {
+    fetchGuidesButton.addEventListener('click', async function() {
       try {
         const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides`, {
           method: 'GET',
@@ -60,23 +59,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (response.ok) {
           // Populate the dropdown with guide names
           const dropdown = document.getElementById('guide-dropdown');
-          dropdown.innerHTML = '<option value="">Select a guide...</option>'; // Clear existing options
-          guides.forEach(guide => {
-            const option = document.createElement('option');
-            option.value = guide.name;
-            option.textContent = guide.name;
-            dropdown.appendChild(option);
-          });
+          if (dropdown) {
+            dropdown.innerHTML = '<option value="">Select a guide...</option>'; // Clear existing options
+            guides.forEach(guide => {
+              const option = document.createElement('option');
+              option.value = guide.name;
+              option.textContent = guide.name;
+              dropdown.appendChild(option);
+            });
 
-          // Set data-feature when a guide is selected
-          dropdown.addEventListener('change', function() {
-            const selectedGuide = dropdown.value;
-            if (selectedGuide) {
-              const guideScript = document.getElementById('guide-script');
-              guideScript.setAttribute('data-feature', selectedGuide);
-              alert(`Guide selected: ${selectedGuide}`);
-            }
-          });
+            // Set data-feature when a guide is selected
+            dropdown.addEventListener('change', function() {
+              const selectedGuide = dropdown.value;
+              if (selectedGuide) {
+                const guideScript = document.getElementById('guide-script');
+                guideScript.setAttribute('data-feature', selectedGuide);
+                alert(`Guide selected: ${selectedGuide}`);
+              }
+            });
+          } else {
+            console.error("Dropdown element not found!");
+          }
         } else {
           console.error('Failed to fetch guides:', guides.message);
         }
@@ -84,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error fetching guides:', error);
       }
     });
+  }
+});
 
 function startGuide(events) {
   if (!events || events.length === 0) {
