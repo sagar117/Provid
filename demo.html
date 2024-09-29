@@ -100,67 +100,6 @@
   <!-- The guide overlay -->
   <div id="guide"></div>
 
-  <script>
-    // Handling form submission
-    document.getElementById('patient-form').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent form submission
-
-      const patientDetails = {
-        firstName: document.getElementById('first-name').value,
-        lastName: document.getElementById('last-name').value,
-        dob: document.getElementById('dob').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-      };
-
-      console.log('Patient Details:', patientDetails);
-      alert('Patient added successfully!');
-      document.getElementById('patient-form').reset(); // Reset the form
-    });
-
-    // Fetching guide list and setting data-feature
-    const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
-
-    document.getElementById('fetch-guides').addEventListener('click', async function() {
-      try {
-        const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        const guides = await response.json();
-
-        if (response.ok) {
-          // Populate the dropdown with guide names
-          const dropdown = document.getElementById('guide-dropdown');
-          dropdown.innerHTML = '<option value="">Select a guide...</option>'; // Clear existing options
-          guides.forEach(guide => {
-            const option = document.createElement('option');
-            option.value = guide.name;
-            option.textContent = guide.name;
-            dropdown.appendChild(option);
-          });
-
-          // Set data-feature when a guide is selected
-          dropdown.addEventListener('change', function() {
-            const selectedGuide = dropdown.value;
-            if (selectedGuide) {
-              const guideScript = document.getElementById('guide-script');
-              guideScript.setAttribute('data-feature', selectedGuide);
-              alert(`Guide selected: ${selectedGuide}`);
-            }
-          });
-        } else {
-          console.error('Failed to fetch guides:', guides.message);
-        }
-      } catch (error) {
-        console.error('Error fetching guides:', error);
-      }
-    });
-  </script>
 
 </body>
 </html>
