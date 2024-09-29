@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Practice Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .form-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .form-section h2 {
+      margin-top: 0;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #guide {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(0, 255, 0, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      display: none;
+    }
+  </style>
+  <script id="guide-script" src="guide.js" data-feature="complex-management"></script>
+</head>
+<body>
+
+  <h1>Medical Practice Management System</h1>
+
+  <!-- Patient Registration Section -->
+  <div class="form-section" id="patient-registration">
+    <h2>Patient Registration</h2>
+    <form id="registration-form">
+      <div class="form-group">
+        <label for="patient-name">Patient Name:</label>
+        <input type="text" id="patient-name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+
+      <button type="submit">Register Patient</button>
+    </form>
+  </div>
+
+  <!-- Appointment Scheduling Section -->
+  <div class="form-section" id="appointment-scheduling">
+    <h2>Schedule Appointment</h2>
+    <form id="appointment-form">
+      <div class="form-group">
+        <label for="patient-list">Select Patient:</label>
+        <select id="patient-list" required>
+          <option value="">Select a patient...</option>
+          <!-- Patients will be populated here -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-date">Appointment Date:</label>
+        <input type="date" id="appointment-date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-time">Appointment Time:</label>
+        <input type="time" id="appointment-time" required>
+      </div>
+
+      <button type="submit">Schedule Appointment</button>
+    </form>
+  </div>
+
+  <!-- Appointment Notes Section -->
+  <div class="form-section" id="appointment-notes">
+    <h2>Add Appointment Notes</h2>
+    <form id="notes-form">
+      <div class="form-group">
+        <label for="appointment-id">Appointment ID:</label>
+        <input type="text" id="appointment-id" required>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Notes:</label>
+        <textarea id="notes" rows="4" required></textarea>
+      </div>
+
+      <button type="submit">Add Notes</button>
+    </form>
+  </div>
+
+  <script>
+    let patients = [];
+
+    // Handle patient registration
+    document.getElementById('registration-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      const patientName = document.getElementById('patient-name').value;
+      const dob = document.getElementById('dob').value;
+      const email = document.getElementById('email').value;
+
+      const patient = { id: patients.length + 1, name: patientName, dob, email };
+      patients.push(patient);
+
+      const patientList = document.getElementById('patient-list');
+      const option = document.createElement('option');
+      option.value = patient.id;
+      option.textContent = patient.name;
+      patientList.appendChild(option);
+
+      alert('Patient registered successfully!');
+      document.getElementById('registration-form').reset(); // Reset the form
+    });
+
+    // Handle appointment scheduling
+    document.getElementById('appointment-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      const patientId = document.getElementById('patient-list').value;
+      const appointmentDate = document.getElementById('appointment-date').value;
+      const appointmentTime = document.getElementById('appointment-time').value;
+
+      console.log(`Appointment scheduled for Patient ID ${patientId} on ${appointmentDate} at ${appointmentTime}`);
+      alert('Appointment scheduled successfully!');
+      document.getElementById('appointment-form').reset(); // Reset the form
+    });
+
+    // Handle notes submission
+    document.getElementById('notes-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      const appointmentId = document.getElementById('appointment-id').value;
+      const notes = document.getElementById('notes').value;
+
+      console.log(`Notes added for Appointment ID ${appointmentId}: ${notes}`);
+      alert('Notes added successfully!');
+      document.getElementById('notes-form').reset(); // Reset the form
+    });
+  </script>
+
+  <!-- The guide overlay -->
+  <div id="guide"></div>
+
+  <!-- Load your guide.js script -->
+</body>
+</html>

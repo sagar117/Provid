@@ -43,6 +43,9 @@ app.get('/demo', (req, res) => {
 app.get('/demo2', (req, res) => {
   res.sendFile(path.join(__dirname, '/', 'addappt.html'));
 });
+app.get('/demo3', (req, res) => {
+  res.sendFile(path.join(__dirname, '/', 'demo3.html'));
+});
 
 
 // Serve the login page
