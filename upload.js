@@ -28,7 +28,7 @@ chrome.storage.local.get('recordingData', async (result) => {
                 title,
                 description,
                 events,
-                orgId: localStorage.getItem('orgId'), // Replace with the actual organization ID
+                // orgId: localStorage.getItem('orgId'), // Replace with the actual organization ID
             };
 
             // Sending the data to the server
