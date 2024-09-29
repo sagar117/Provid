@@ -1,9 +1,12 @@
+const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
+
+
 document.getElementById('guideForm').addEventListener('submit', function (e) {
     e.preventDefault();
     const name = document.getElementById('guideName').value;
     const description = document.getElementById('guideDescription').value;
 
-    fetch('http://0.0.0.0:3000/api/guides', {
+    fetch('http://34.71.54.137:3000/api/guides', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
