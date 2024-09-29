@@ -87,25 +87,7 @@ router.post('/refresh-token', (req, res) => {
 
 
 // Get a user by ID
-router.get('/users/:id', async (req, res) => {
-    const { username } = req.params; // Get the username from the request parameters
-
-    try {
-        const user = await User.findById(username); // Fetch a specific user by ID
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.status(200).json({
-            username: user.username,
-            email: user.email,
-            orgId: user.orgId,
-            // Add any other relevant user fields you want to return
-        }); // Return the user details in JSON format
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({ message: 'Error fetching user', error });
-    }
-});
+router.get('/users/:id', authController.getUserByUsername);
 
 
 
