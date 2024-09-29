@@ -7,9 +7,9 @@ require('dotenv').config(); // Load environment variables
 
 // const config = require('./config/config'); // Configuration file
 const { router: authRoutes } = require('./routes/auth'); // Correct import of auth routes
-const { router: orgRoutes } = require('./routes/org'); // Correct import of auth routes
+// const { router: orgRoutes } = require('./routes/auth'); // Correct import of auth routes
 
-// const orgRoutes = require('./routes/org'); // Import organization routes
+const orgRoutes = require('./routes/org'); // Import organization routes
 
 const app = express();
 
