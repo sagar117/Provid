@@ -42,24 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-    // Handling form submission
-    document.getElementById('patient-form').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent form submission
-
-      const patientDetails = {
-        firstName: document.getElementById('first-name').value,
-        lastName: document.getElementById('last-name').value,
-        dob: document.getElementById('dob').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-      };
-
-      console.log('Patient Details:', patientDetails);
-      alert('Patient added successfully!');
-      document.getElementById('patient-form').reset(); // Reset the form
-    });
-
+    
     // Fetching guide list and setting data-feature
     // const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
