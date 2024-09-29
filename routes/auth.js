@@ -21,7 +21,8 @@ router.post('/register', async (req, res) => {
 
     try {
         // Check if the organization exists
-        const organization = await Organization.findOne({ name: orgId }); // if orgId refers to the name of the organization
+        const organization = await Organization.findOne({ name: org_id }); // if orgId refers to the name of the organization
+
         if (!organization) {
             return res.status(404).json({ message: 'Organization not found' });
         }
