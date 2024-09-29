@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(`Guide selected: ${selectedGuideName}`);
                 
                 // Get the events for the selected guide from the already fetched data
-                const selectedGuide = guidesData.find(guide => guide.name === selectedGuideName);
+                const selectedGuide = guidesData.find(guide => guide.title === selectedGuideName);
                 if (selectedGuide && selectedGuide.events) {
                   selectedGuideEvents = selectedGuide.events;
                   console.log(`Events for ${selectedGuideName} set:`, selectedGuideEvents);
