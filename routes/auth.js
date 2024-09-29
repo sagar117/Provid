@@ -116,7 +116,7 @@ const authenticateJWT = (req, res, next) => {
 };
 
 // Export both the router and the authenticateJWT function
-module.exports = { router };
+module.exports = { router, authenticateJWT };
 
 console.log(authController);  // This should print the exported object with `login` method
 

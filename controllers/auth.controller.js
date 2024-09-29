@@ -39,7 +39,7 @@ exports.register = async (req, res) => {
 }
 
 // User login
-exports.login = async (req, res) => {
+const login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
@@ -121,4 +121,5 @@ const getUserByUsername = async (req, res) => {
 module.exports = {
     // ... other exports,
     getUserByUsername,
+    login,
 };
