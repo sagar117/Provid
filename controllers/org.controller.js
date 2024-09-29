@@ -75,7 +75,14 @@ exports.saveGuide = async (req, res) => {
 exports.getGuides = async (req, res) => {
     try {
         const orgId = req.user.orgId; // Assuming orgId is available in the authenticated user
-        const guides = await Guide.find({ orgId }); // Fetch guides for the organization
+
+        // Fetch guides for the organization or those with a null orgId
+        const guides = await Guide.find({ 
+            $or: [
+                { orgId: orgId }, 
+                { orgId: null } // Include guides with null orgId
+            ] 
+        });
 
         res.status(200).json(guides);
     } catch (error) {
@@ -83,5 +90,4 @@ exports.getGuides = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-
 
