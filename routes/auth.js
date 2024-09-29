@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken'); // For generating tokens
 const router = express.Router();
 require('dotenv').config(); // Load environment variables
 const Organization = require('../models/organization.model'); // Make sure this is correctly imported
-
+const User = require('../models/user.model'); // Make sure this is correctly imported
 
 const users = []; // In-memory user storage
 
