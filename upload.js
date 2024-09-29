@@ -35,7 +35,7 @@ chrome.storage.local.get('recordingData', async (result) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer`+token, // Include JWT token if needed
+                    'Authorization': `Bearer ${token}`, // Include JWT token if needed
                 },
                 body: JSON.stringify(guideData),
             });
