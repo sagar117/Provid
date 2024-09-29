@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdown.innerHTML = '<option value="">Select a guide...</option>'; // Clear existing options
             guides.forEach(guide => {
               const option = document.createElement('option');
-              option.value = guide.name;
-              option.textContent = guide.name;
+              option.value = guide.title;
+              option.textContent = guide.title;
               dropdown.appendChild(option);
             });
 
