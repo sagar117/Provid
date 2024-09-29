@@ -1,5 +1,47 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Access the script element and get the data-feature attribute
+  const featureScript = document.getElementById('guide-script');
+  const featureName = featureScript.getAttribute('data-feature');  // Safely access the data attribute
+
+  // Fetch the recorded JSON data from your server based on the feature name
+  fetch(`${apiBaseUrl}/recordings/${featureName}`) 
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to load feature guide: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Fetched data:', data);  // Log the fetched data
+
+      if (!data || !data.events || !Array.isArray(data.events)) {
+        console.error('Invalid data format or no events found:', data);
+        return;
+      }
+
+      const guideButton = document.createElement('button');
+      guideButton.innerText = 'Guide Me';
+      guideButton.style.position = 'fixed';
+      guideButton.style.bottom = '20px';
+      guideButton.style.right = '20px';
+      guideButton.style.zIndex = '9999';
+
+      guideButton.addEventListener('click', () => {
+        console.log('Guide button clicked, starting guide with events:', data.events);
+        startGuide(data.events);
+      });
+
+      document.body.appendChild(guideButton);
+    })
+    .catch(error => {
+      console.error('Error fetching the feature guide:', error);
+    });
+});
+
     // Handling form submission
     document.getElementById('patient-form').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent form submission
@@ -59,46 +101,6 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
         console.error('Error fetching guides:', error);
       }
     });
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Access the script element and get the data-feature attribute
-  const featureScript = document.getElementById('guide-script');
-  const featureName = featureScript.getAttribute('data-feature');  // Safely access the data attribute
-
-  // Fetch the recorded JSON data from your server based on the feature name
-  fetch(`${apiBaseUrl}/recordings/${featureName}`) 
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to load feature guide: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Fetched data:', data);  // Log the fetched data
-
-      if (!data || !data.events || !Array.isArray(data.events)) {
-        console.error('Invalid data format or no events found:', data);
-        return;
-      }
-
-      const guideButton = document.createElement('button');
-      guideButton.innerText = 'Guide Me';
-      guideButton.style.position = 'fixed';
-      guideButton.style.bottom = '20px';
-      guideButton.style.right = '20px';
-      guideButton.style.zIndex = '9999';
-
-      guideButton.addEventListener('click', () => {
-        console.log('Guide button clicked, starting guide with events:', data.events);
-        startGuide(data.events);
-      });
-
-      document.body.appendChild(guideButton);
-    })
-    .catch(error => {
-      console.error('Error fetching the feature guide:', error);
-    });
-});
 
 function startGuide(events) {
   if (!events || events.length === 0) {
