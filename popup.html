@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h2>Feature Recorder</h2>
+    <h2 id="heading">Feature Recorder</h2>
+
+        <!-- Login and Signup Forms -->
+        <div id="auth-section">
+          <div id="login-form" style="display: none;">
+            <h3>Login</h3>
+            <input type="text" id="login-username" placeholder="Username" />
+            <input type="password" id="login-password" placeholder="Password" />
+            <button id="login-btn">Login</button>
+            <p id="login-error" style="color: red;"></p>
+            <p>Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
+          </div>
+    
+          <div id="signup-form" style="display: none;">
+            <h3>Sign Up</h3>
+            <input type="text" id="signup-org" placeholder="Organization Name" />
+            <input type="text" id="signup-email" placeholder="Email" />
+            <input type="password" id="signup-password" placeholder="Password" />
+            <button id="signup-btn">Sign Up</button>
+            <p id="signup-error" style="color: red;"></p>
+            <p>Already have an account? <a href="#" id="switch-to-login">Log in</a></p>
+          </div>
+        </div>
+        <div id="recorder-section" style="display: none;">
+
+    <!-- <h2>Feature Recorder</h2> -->
     <button id="start-recording">Start Recording</button>
     <button id="stop-recording" disabled>Stop Recording</button>
     <button id="load-recording">Load Saved Recording</button>
@@ -17,6 +44,8 @@
     </div>
 
     <button id="upload-btn">Go to Upload Page</button>
+    </div>
+    <button id="logout-btn">Log Out</button>
 
     <script src="popup.js"></script>
   </body>

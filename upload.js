@@ -13,22 +13,22 @@ chrome.storage.local.get('recordingData', async (result) => {
         const events = result.recordingData.events || [];
 
         // Fetch the token from local storage
-        // chrome.storage.local.get(['token'], async (result) => {
-        //     const token = result.token;
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
+        chrome.storage.local.get(['token'], async (result) => {
+            const token = result.token;
+        // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
 
-            // if (!token) {
-            //     console.error('Token not found');
-            //     alert('Token not found. Please log in again.');
-            //     return;
-            // }
+            if (!token) {
+                console.error('Token not found');
+                alert('Token not found. Please log in again.');
+                return;
+            }
 
             // Construct the data object to send to the server
             const guideData = {
                 title,
                 description,
                 events,
-                // orgId: localStorage.getItem('orgId'), // Replace with the actual organization ID
+                orgId: localStorage.getItem('orgId'), // Replace with the actual organization ID
             };
 
             // Sending the data to the server
@@ -56,7 +56,7 @@ chrome.storage.local.get('recordingData', async (result) => {
                 console.error('Error during saving:', error);
                 alert('An error occurred while saving the guide.');
             }
-        // });
+        });
     } else {
         console.error("No recording data found.");
         alert("No recording data found.");
@@ -92,8 +92,8 @@ document.getElementById('save-recording').addEventListener('click', () => {
 
 
 document.getElementById('fetch-guides').addEventListener('click', async () => {
-    // const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
     const apiBaseUrl = 'http://34.71.54.137:3000'; // Replace with your actual server IP
     
     try {

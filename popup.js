@@ -1,11 +1,152 @@
+const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
+
+  // DOM Elements
+  const loginForm = document.getElementById('login-form');
+  const signupForm = document.getElementById('signup-form');
+  const authSection = document.getElementById('auth-section');
+  const recorderSection = document.getElementById('recorder-section');
+  const logoutBtn = document.getElementById('logout-btn');
+
 // Function to update button states based on recording status
 function updateButtonStates(isRecording) {
   const startButton = document.getElementById('start-recording');
   const stopButton = document.getElementById('stop-recording');
+// const startBtn = document.getElementById('start-recording');
+// const stopBtn = document.getElementById('stop-recording');
+// const loadBtn = document.getElementById('load-recording');
+// const recordedInfoDisplay = document.getElementById('recorded-info');
+// const recordInfoSection = document.getElementById('record-info');
+// const featureNameInput = document.getElementById('feature-name');
+// const featureDescriptionInput = document.getElementById('feature-description');
+// const saveRecordingBtn = document.getElementById('save-recording');
+// const uploadBtn = document.getElementById('upload-btn');
+// const loginError = document.getElementById('login-error');
+// const signupError = document.getElementById('signup-error');
 
   startButton.disabled = isRecording;
   stopButton.disabled = !isRecording;
 }
+
+// Check if user is logged in
+const authToken = localStorage.getItem('token');
+if (authToken) {
+  showRecorderSection();  // User is logged in, show the recorder section
+} else {
+  showLoginForm();  // Show login/signup forms if not logged in
+}
+
+// Switch between login and signup forms
+document.getElementById('switch-to-signup').addEventListener('click', () => {
+  loginForm.style.display = 'none';
+  signupForm.style.display = 'block';
+});
+
+document.getElementById('switch-to-login').addEventListener('click', () => {
+  signupForm.style.display = 'none';
+  loginForm.style.display = 'block';
+});
+
+// Handle Login
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const username = document.getElementById('login-username').value;
+  const password = document.getElementById('login-password').value;
+
+  if (!username || !password) {
+    loginError.textContent = 'Please fill in both fields';
+    return;
+  }
+
+
+  const payload = { username, password };
+
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    console.log("Response status:", response.status); // Log response status
+    console.log("Response data:", data); // Log response data for debugging
+
+    if (response.ok) {
+        // Login was successful
+        alert('Login successful!');
+        // Save token in localStorage or session storage
+        localStorage.setItem('token', data.token);
+        sessionStorage.setItem('refreshToken', data.refreshToken);
+        showRecorderSection();
+
+        // Redirect user to dashboard or homepage
+        // window.location.href = '/dashboard.html';
+    } else {
+        // Handle login failure
+        alert(data.message || 'Login failed');
+    }
+} catch (error) {
+    console.error('Error during login:', error);
+    alert('An error occurred while trying to log in. Please try again.');
+}
+});
+
+// Handle Signup
+document.getElementById('signup-btn').addEventListener('click', async () => {
+  const orgName = document.getElementById('signup-org').value;
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+
+  if (!orgName || !email || !password) {
+    signupError.textContent = 'Please fill in all fields';
+    return;
+  }
+
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/orgs/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ orgName, email, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem('authToken', data.token);  // Store the token in localStorage
+      showRecorderSection();
+    } else {
+      const errorData = await response.json();
+      signupError.textContent = errorData.message || 'Signup failed';
+    }
+  } catch (error) {
+    console.error('Signup error:', error);
+  }
+});
+
+// Handle Logout
+logoutBtn.addEventListener('click', () => {
+  localStorage.removeItem('token');
+  location.reload();  // Reload the extension to reset state
+});
+
+// Function to show the recorder section after login/signup
+function showRecorderSection() {
+  authSection.style.display = 'none';
+  recorderSection.style.display = 'block';
+}
+
+// Function to show the login form
+function showLoginForm() {
+  loginForm.style.display = 'block';
+  signupForm.style.display = 'none';
+  recorderSection.style.display = 'none';
+}
+
+
+
 
 // Check the current recording state from Chrome storage
 chrome.storage.sync.get(['isRecording'], (result) => {
