@@ -1,7 +1,5 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
-const apiBaseUrl = 'http://your-server-ip:3000';  // Replace with your actual server IP
-
 document.getElementById('orgForm').addEventListener('submit', async function (e) {
     e.preventDefault(); // Prevent the form from submitting the traditional way
 
