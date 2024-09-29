@@ -72,18 +72,13 @@ exports.saveGuide = async (req, res) => {
     }
 };
 
+// Function to fetch all guides without filtering by orgId
 exports.getGuides = async (req, res) => {
     try {
-        const orgId = req.user.orgId; // Assuming orgId is available in the authenticated user
+        // Fetch all guides from the database
+        const guides = await Guide.find();
 
-        // Fetch guides for the organization or those with a null orgId
-        const guides = await Guide.find({ 
-            $or: [
-                { orgId: orgId }, 
-                { orgId: null } // Include guides with null orgId
-            ] 
-        });
-
+        // Send the guides back to the client
         res.status(200).json(guides);
     } catch (error) {
         console.error("Error fetching guides:", error);

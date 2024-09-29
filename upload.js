@@ -101,7 +101,6 @@ document.getElementById('fetch-guides').addEventListener('click', async () => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`, // Include JWT token
             },
         });
 
