@@ -1,45 +1,30 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
+let guidesData = [];  // To store all guide data with events
+let selectedGuideEvents = [];  // To store events of the selected guide
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Access the script element and get the data-feature attribute
   const featureScript = document.getElementById('guide-script');
   const featureName = featureScript?.getAttribute('data-feature');  // Safely access the data attribute
 
-  if (featureName) {
-    // Fetch the recorded JSON data from your server based on the feature name
-    fetch(`${apiBaseUrl}/recordings/${featureName}`) 
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Failed to load feature guide: ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Fetched data:', data);  // Log the fetched data
+  // Create and configure the 'Guide Me' button
+  const guideButton = document.createElement('button');
+  guideButton.innerText = 'Guide Me';
+  guideButton.style.position = 'fixed';
+  guideButton.style.bottom = '20px';
+  guideButton.style.right = '20px';
+  guideButton.style.zIndex = '9999';
 
-        if (!data || !data.events || !Array.isArray(data.events)) {
-          console.error('Invalid data format or no events found:', data);
-          return;
-        }
+  guideButton.addEventListener('click', () => {
+    if (selectedGuideEvents.length > 0) {
+      console.log('Starting guide with selected events:', selectedGuideEvents);
+      startGuide(selectedGuideEvents);
+    } else {
+      alert('Please select a guide from the dropdown to start the guide.');
+    }
+  });
 
-        const guideButton = document.createElement('button');
-        guideButton.innerText = 'Guide Me';
-        guideButton.style.position = 'fixed';
-        guideButton.style.bottom = '20px';
-        guideButton.style.right = '20px';
-        guideButton.style.zIndex = '9999';
-
-        guideButton.addEventListener('click', () => {
-          console.log('Guide button clicked, starting guide with events:', data.events);
-          startGuide(data.events);
-        });
-
-        document.body.appendChild(guideButton);
-      })
-      .catch(error => {
-        console.error('Error fetching the feature guide:', error);
-      });
-  }
+  document.body.appendChild(guideButton);
 
   // Fetching guide list and setting data-feature
   const fetchGuidesButton = document.getElementById('fetch-guides');
@@ -55,27 +40,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const guides = await response.json();
-        console.log(guides);
 
         if (response.ok) {
+          // Store the fetched guide data
+          guidesData = guides;
+          console.log('Fetched guide data:', guidesData);
+
           // Populate the dropdown with guide names
           const dropdown = document.getElementById('guide-dropdown');
           if (dropdown) {
             dropdown.innerHTML = '<option value="">Select a guide...</option>'; // Clear existing options
             guides.forEach(guide => {
               const option = document.createElement('option');
-              option.value = guide.title;
-              option.textContent = guide.title;
+              option.value = guide.name;
+              option.textContent = guide.name;
               dropdown.appendChild(option);
             });
 
-            // Set data-feature when a guide is selected
+            // Set data-feature when a guide is selected and get its events
             dropdown.addEventListener('change', function() {
-              const selectedGuide = dropdown.value;
-              if (selectedGuide) {
+              const selectedGuideName = dropdown.value;
+              if (selectedGuideName) {
                 const guideScript = document.getElementById('guide-script');
-                guideScript.setAttribute('data-feature', selectedGuide);
-                alert(`Guide selected: ${selectedGuide}`);
+                guideScript.setAttribute('data-feature', selectedGuideName);
+                alert(`Guide selected: ${selectedGuideName}`);
+                
+                // Get the events for the selected guide from the already fetched data
+                const selectedGuide = guidesData.find(guide => guide.name === selectedGuideName);
+                if (selectedGuide && selectedGuide.events) {
+                  selectedGuideEvents = selectedGuide.events;
+                  console.log(`Events for ${selectedGuideName} set:`, selectedGuideEvents);
+                } else {
+                  console.error(`No events found for the selected guide: ${selectedGuideName}`);
+                  selectedGuideEvents = [];
+                }
               }
             });
           } else {
@@ -91,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Function to start the guide based on selected events
 function startGuide(events) {
   if (!events || events.length === 0) {
     console.error('No events found to guide the user.');
@@ -101,11 +100,11 @@ function startGuide(events) {
   guideUserThroughSteps(events);
 }
 
+// Function to guide the user through the steps
 function guideUserThroughSteps(events) {
-  console.log(events);
   events.forEach((event, index) => {
     setTimeout(() => {
-      // Locate the target element using XPath instead of a simple querySelector
+      // Locate the target element using XPath
       const target = getElementByXpath(event.xpath);
       if (target) {
         // Create a cursor with accompanying text from the events array
@@ -119,7 +118,6 @@ function guideUserThroughSteps(events) {
 
 // Function to highlight the element where the interaction happened
 function highlightElement(element, x, y, text) {
-  // Create a visual cursor or highlight effect
   const cursor = document.createElement('div');
   cursor.style.position = 'absolute';
   cursor.style.width = '20px';
@@ -132,7 +130,6 @@ function highlightElement(element, x, y, text) {
 
   document.body.appendChild(cursor);
 
-  // Create a text box to show next to the cursor
   const guideText = document.createElement('div');
   guideText.style.position = 'absolute';
   guideText.style.color = 'white';
@@ -142,20 +139,18 @@ function highlightElement(element, x, y, text) {
   guideText.style.fontSize = '14px';
   guideText.style.zIndex = '9999';
   guideText.style.top = `${y}px`;
-  guideText.style.left = `${x + 50}px`; // Text displayed 30px to the right of the cursor
+  guideText.style.left = `${x + 50}px`; // Display text next to cursor
 
   guideText.textContent = text || 'Step';
 
   document.body.appendChild(guideText);
 
-  // Highlight the actual element (like a button or input field)
-  element.style.outline = '2px solid blue';
+  element.style.outline = '2px solid blue';  // Highlight the element
 
-  // Remove the highlight and text after 1.5 seconds
   setTimeout(() => {
     cursor.remove();
     guideText.remove();
-    element.style.outline = '';  // Remove outline from the element
+    element.style.outline = '';  // Remove outline after 2 seconds
   }, 2000);
 }
 
