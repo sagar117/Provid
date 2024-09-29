@@ -4,7 +4,7 @@ const orgController = require('../controllers/org.controller');
 
 // Route to create an organization and user simultaneously
 router.post('/create', orgController.createOrgAndUser);
-router.post('/saveRecording', orgController.saveGuide);
+router.post('/saveGuide', orgController.saveGuide);
 
 
 module.exports = router;
