@@ -14,7 +14,7 @@ document.getElementById('orgForm').addEventListener('submit', async function (e)
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`  // Include token if necessary
+                // 'Authorization': `Bearer ${tokßenß}`  // Include token if necessary
             },
             body: JSON.stringify({
                 orgName,

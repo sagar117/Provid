@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken'); // For generating tokens
 const router = express.Router();
 require('dotenv').config(); // Load environment variables
+const Organization = require('../models/organization.model'); // Make sure this is correctly imported
+
 
 const users = []; // In-memory user storage
 
@@ -19,7 +21,7 @@ router.post('/register', async (req, res) => {
 
     try {
         // Check if the organization exists
-        const organization = await Org.findById(org_id);
+        const organization = await Organization.findById(org_id);
         if (!organization) {
             return res.status(404).json({ message: 'Organization not found' });
         }
