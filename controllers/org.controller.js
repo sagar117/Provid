@@ -1,100 +1,49 @@
-const Org = require('../models/organization.model');  // Assuming you have an Org model
-const User = require('../models/user.model');  // Assuming you have a User model
+const Org = require('../models/Organization'); // Import the Organization model
+const User = require('../models/User'); // Import the User model
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();  // To use the JWT_SECRET from environment variables
 
-// JWT secret key
-const JWT_SECRET = process.env.JWT_SECRET;
+// Create an organization and a user simultaneously
+exports.createOrgAndUser = async (req, res) => {
+    const { orgName, orgEmail, username, password, userEmail } = req.body;
 
-// Create organization controller
-const createOrg = async (req, res) => {
     try {
-        // Get token from headers
-        const token = req.header('Authorization')?.split(' ')[1];
-
-        // If no token, return forbidden
-        if (!token) {
-            return res.status(403).json({ message: 'Forbidden: No token provided' });
-        }
-
-        // Verify the token
-        const decoded = jwt.verify(token, JWT_SECRET);
-
-        // Extract organization details from request body
-        const { orgName, ownerName, email } = req.body;
-
-        // Create a new organization
+        // 1. Create the Organization
         const org = new Org({
-            orgName,
-            ownerName,
-            email,
-            createdBy: decoded.username  // Store the user who created the organization
+            name: orgName,
+            email: orgEmail
         });
 
-        // Save organization to the database
         const savedOrg = await org.save();
 
-        res.status(201).json({ message: 'Organization created successfully', org: savedOrg });
-
-    } catch (error) {
-        console.error('Error creating organization:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-};
-
-// Add user to organization controller
-const addUserToOrg = async (req, res) => {
-    try {
-        // Get token from headers
-        const token = req.header('Authorization')?.split(' ')[1];
-
-        // If no token, return forbidden
-        if (!token) {
-            return res.status(403).json({ message: 'Forbidden: No token provided' });
-        }
-
-        // Verify the token
-        const decoded = jwt.verify(token, JWT_SECRET);
-
-        // Extract user and org details from request body
-        const { orgId, username, password, email } = req.body;
-
-        // Check if the organization exists
-        const org = await Org.findById(orgId);
-        if (!org) {
-            return res.status(404).json({ message: 'Organization not found' });
-        }
-
-        // Check if user already exists
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
-
-        // Hash the user's password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create a new user
+        // 2. Create the User linked to the Organization
+        const hashedPassword = await bcrypt.hash(password, 10); // Hash the user's password
         const user = new User({
-            username,
+            username: username,
+            email: userEmail,
             password: hashedPassword,
-            email,
-            orgId: orgId
+            org_id: savedOrg._id // Link user to the newly created organization
         });
 
-        // Save the user to the database
         const savedUser = await user.save();
 
-        res.status(201).json({ message: 'User added to organization', user: savedUser });
+        // 3. Generate a JWT token for the user (optional)
+        const token = jwt.sign({ userId: savedUser._id, orgId: savedOrg._id }, process.env.JWT_SECRET, {
+            expiresIn: '1h'
+        });
 
+        // 4. Send response back
+        res.status(201).json({
+            message: 'Organization and User created successfully',
+            org: savedOrg,
+            user: savedUser,
+            token: token
+        });
     } catch (error) {
-        console.error('Error adding user to organization:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('Error creating organization and user:', error);
+        res.status(500).json({
+            message: 'Server error. Unable to create organization and user.',
+            error: error.message
+        });
     }
-};
-
-// Export controllers
-module.exports = {
-    createOrg,
-    addUserToOrg
 };
