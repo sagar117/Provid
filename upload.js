@@ -17,11 +17,11 @@ chrome.storage.local.get('recordingData', async (result) => {
         //     const token = result.token;
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
 
-            if (!token) {
-                console.error('Token not found');
-                alert('Token not found. Please log in again.');
-                return;
-            }
+            // if (!token) {
+            //     console.error('Token not found');
+            //     alert('Token not found. Please log in again.');
+            //     return;
+            // }
 
             // Construct the data object to send to the server
             const guideData = {
@@ -56,7 +56,7 @@ chrome.storage.local.get('recordingData', async (result) => {
                 console.error('Error during saving:', error);
                 alert('An error occurred while saving the guide.');
             }
-        });
+        // });
     } else {
         console.error("No recording data found.");
         alert("No recording data found.");
