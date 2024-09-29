@@ -2,6 +2,9 @@ const Org = require('../models/organization.model'); // Import the Organization 
 const User = require('../models/user.model'); // Import the User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Guide = require('../models/Guides'); // Assuming you have a Guide model
+
+
 
 // Create an organization and a user simultaneously
 exports.createOrgAndUser = async (req, res) => {
@@ -47,3 +50,28 @@ exports.createOrgAndUser = async (req, res) => {
         });
     }
 };
+
+
+
+// Save guide data for a specific organization
+exports.saveGuide = async (req, res) => {
+    const { title, description, events, orgId } = req.body;
+
+    try {
+        const newGuide = new Guide({
+            title,
+            description,
+            events,
+            organization: orgId, // Store the reference to the organization
+            createdAt: new Date(),
+        });
+
+        await newGuide.save();
+        res.status(201).json({ message: 'Guide saved successfully!', guide: newGuide });
+    } catch (error) {
+        console.error("Error saving guide:", error);
+        res.status(500).json({ message: 'Failed to save guide.' });
+    }
+};
+
+
