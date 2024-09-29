@@ -40,6 +40,10 @@ app.get('/upload', (req, res) => {
 app.get('/demo', (req, res) => {
   res.sendFile(path.join(__dirname, '/', 'demo.html'));
 });
+app.get('/demo2', (req, res) => {
+  res.sendFile(path.join(__dirname, '/', 'addappt.html'));
+});
+
 
 // Serve the login page
 app.get('/login', (req, res) => {
