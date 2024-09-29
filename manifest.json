@@ -16,7 +16,7 @@
 
   "content_scripts": [
       {
-        "matches": ["https://www.stodict.com/","http://localhost:3000/","http://localhost:3000/demo","http://34.71.54.137:3000/demo2","http://34.71.54.137:3000/demo2"],
+        "matches": ["https://www.stodict.com/","http://localhost:3000/","http://localhost:3000/demo","http://34.71.54.137:3000/demo2","http://34.71.54.137:3000/demo3"],
         "js": ["content.js"]
       }
     ],

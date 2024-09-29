@@ -1,5 +1,7 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 let guideDataArray = [];  // Global array to store fetched guides
+let currentEventIndex = 0; // Track the current event index
+let isGuideActive = false; // Flag to check if the guide is active
 
 document.addEventListener('DOMContentLoaded', () => {
   // Create and append the dropdown for selecting guides
@@ -75,24 +77,42 @@ function startGuide(events) {
     return;
   }
 
-  console.log("Starting guide with events:", events);
-  guideUserThroughSteps(events);
+  currentEventIndex = 0; // Reset event index to start from the beginning
+  isGuideActive = true; // Set the guide as active
+  guideUserThroughSteps(events); // Start guiding
 }
 
 function guideUserThroughSteps(events) {
-  console.log(events);
-  events.forEach((event, index) => {
-    setTimeout(() => {
-      // Locate the target element using XPath
-      const target = getElementByXpath(event.xpath);
-      if (target) {
-        // Create a cursor with accompanying text from the events array
-        highlightElement(target, event.x, event.y, event.text || `Step ${index + 1}`);
-      } else {
-        console.warn(`Target element not found for event at: ${event.xpath}`);
-      }
-    }, event.timestamp - events[0].timestamp);
-  });
+  if (currentEventIndex >= events.length) {
+    console.log('All guide events completed.');
+    isGuideActive = false; // Mark guide as inactive
+    return; // Exit if all events have been shown
+  }
+
+  const event = events[currentEventIndex]; // Get the current event
+  const target = getElementByXpath(event.xpath); // Locate the target element
+
+  if (target) {
+    highlightElement(target, event.x, event.y, event.text || `Step ${currentEventIndex + 1}`);
+
+    // Check for modal popup or new page navigation
+    if (isModalOpen()) {
+      console.log('Modal is open, pausing guide.');
+      waitForModalClose().then(() => {
+        console.log('Modal closed, resuming guide.');
+        currentEventIndex++; // Move to the next event
+        guideUserThroughSteps(events); // Resume guiding
+      });
+    } else {
+      // Move to the next step after a delay
+      setTimeout(() => {
+        currentEventIndex++; // Increment event index
+        guideUserThroughSteps(events); // Continue to the next step
+      }, 3000); // Adjust delay as needed
+    }
+  } else {
+    console.warn(`Target element not found for event at: ${event.xpath}`);
+  }
 }
 
 // Function to highlight the element where the interaction happened
@@ -129,12 +149,29 @@ function highlightElement(element, x, y, text) {
   // Highlight the actual element (like a button or input field)
   element.style.outline = '2px solid blue';
 
-  // Remove the highlight and text after 1.5 seconds
+  // Remove the highlight and text after 2 seconds
   setTimeout(() => {
     cursor.remove();
     guideText.remove();
     element.style.outline = '';  // Remove outline from the element
   }, 2000);
+}
+
+// Function to check if a modal is open
+function isModalOpen() {
+  return !!document.querySelector('.modal.show'); // Adjust selector based on your modal implementation
+}
+
+// Function to wait for a modal to close
+function waitForModalClose() {
+  return new Promise((resolve) => {
+    const checkModal = setInterval(() => {
+      if (!isModalOpen()) {
+        clearInterval(checkModal);
+        resolve();
+      }
+    }, 500); // Check every 500ms
+  });
 }
 
 // Helper function to get an element by XPath
