@@ -21,6 +21,7 @@ chrome.storage.local.get('recordingData', async (result) => {
         };
 
         // Sending the data to the server
+        console.log("token to he",localStorage.getItem('token'));
         
         try {
             const response = await fetch(`${apiBaseUrl}/api/orgs/saveGuide`, {
