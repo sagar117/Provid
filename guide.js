@@ -48,8 +48,8 @@ async function fetchGuides(dropdown, guideButton) {
       guideDataArray = guides;  // Store fetched guides in the global array
       guides.forEach(guide => {
         const option = document.createElement('option');
-        option.value = guide.name;  // Assuming `name` is unique
-        option.textContent = guide.name;
+        option.value = guide.title;  // Assuming `name` is unique
+        option.textContent = guide.title;
         dropdown.appendChild(option);
       });
 
@@ -66,7 +66,7 @@ async function fetchGuides(dropdown, guideButton) {
 
 // Function to get guide data based on the selected guide name
 function getGuideData(selectedGuide) {
-  return guideDataArray.find(guide => guide.name === selectedGuide);  // Adjust as necessary
+  return guideDataArray.find(guide => guide.title === selectedGuide);  // Adjust as necessary
 }
 
 function startGuide(events) {
