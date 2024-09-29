@@ -51,7 +51,6 @@ exports.createOrgAndUser = async (req, res) => {
 };
 
 
-
 // Save guide data for a specific organization
 exports.saveGuide = async (req, res) => {
     const { title, description, events, orgId } = req.body;
