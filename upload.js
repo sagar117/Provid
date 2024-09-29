@@ -92,14 +92,16 @@ document.getElementById('save-recording').addEventListener('click', () => {
 
 
 document.getElementById('fetch-guides').addEventListener('click', async () => {
-    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    // const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
     const apiBaseUrl = 'http://34.71.54.137:3000'; // Replace with your actual server IP
     
     try {
         const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides`, {
             method: 'GET',
             headers: {
-                // 'Authorization': `Bearer ${token}`, // Include JWT token
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Include JWT token
             },
         });
 
