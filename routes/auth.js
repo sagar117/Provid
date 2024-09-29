@@ -87,7 +87,7 @@ router.post('/refresh-token', (req, res) => {
 
 
 // Get a user by ID
-router.get('/users/:id', authController.getUserByUsername);
+router.get('/users/:username', authController.getUserByUsername);
 
 
 
