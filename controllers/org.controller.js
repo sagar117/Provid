@@ -1,5 +1,5 @@
-const Org = require('../models/Organization'); // Import the Organization model
-const User = require('../models/User'); // Import the User model
+const Org = require('../models/organization.model'); // Import the Organization model
+const User = require('../models/user.model'); // Import the User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
