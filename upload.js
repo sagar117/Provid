@@ -12,6 +12,13 @@ chrome.storage.local.get('recordingData', async (result) => {
         // Assuming 'events' is stored in recordingData as an array of event objects
         const events = result.recordingData.events || [];
 
+        chrome.storage.local.get(['token'], (result) => {
+            const token = result.token;
+            if (!token) {
+                console.error('Token not found');
+                return;
+            }
+
         // Construct the data object to send to the server
         const guideData = {
             title,
@@ -21,14 +28,14 @@ chrome.storage.local.get('recordingData', async (result) => {
         };
 
         // Sending the data to the server
-        console.log("token to he",localStorage.getItem('token'));
+        console.log("token to he",token);
         
         try {
             const response = await fetch(`${apiBaseUrl}/api/orgs/saveGuide`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include JWT token if needed
+                    'Authorization': `Bearer`+token, // Include JWT token if needed
                 },
                 body: JSON.stringify(guideData),
             });
