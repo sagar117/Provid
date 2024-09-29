@@ -90,11 +90,16 @@ router.post('/refresh-token', (req, res) => {
 router.get('/users/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const user = await User.findById(id); // Fetch a specific user by ID
+        const user = await User.findById(username); // Fetch a specific user by ID
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json(user); // Return the user details in JSON format
+        res.status(200).json({
+            username: user.username,
+            email: user.email,
+            orgId: user.orgId,
+            // Add any other relevant user fields you want to return
+        }); // Return the user details in JSON format
     } catch (error) {
         console.error('Error fetching user:', error);
         res.status(500).json({ message: 'Error fetching user', error });
