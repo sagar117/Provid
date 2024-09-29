@@ -1,95 +1,74 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
-
-let guidesData = [];  // To store all guide data with events
-let selectedGuideEvents = [];  // To store events of the selected guide
+let guideDataArray = [];  // Global array to store fetched guides
 
 document.addEventListener('DOMContentLoaded', () => {
-  const featureScript = document.getElementById('guide-script');
-  const featureName = featureScript?.getAttribute('data-feature');  // Safely access the data attribute
+  // Create and append the dropdown for selecting guides
+  const dropdown = document.createElement('select');
+  dropdown.id = 'guide-dropdown';
+  dropdown.innerHTML = '<option value="">Select a guide...</option>';
+  document.body.appendChild(dropdown);
 
-  // Create and configure the 'Guide Me' button
+  // Create and append the "Guide Me" button
   const guideButton = document.createElement('button');
   guideButton.innerText = 'Guide Me';
   guideButton.style.position = 'fixed';
   guideButton.style.bottom = '20px';
   guideButton.style.right = '20px';
   guideButton.style.zIndex = '9999';
-
-  guideButton.addEventListener('click', () => {
-    if (selectedGuideEvents.length > 0) {
-      console.log('Starting guide with selected events:', selectedGuideEvents);
-      startGuide(selectedGuideEvents);
-    } else {
-      alert('Please select a guide from the dropdown to start the guide.');
-    }
-  });
-
+  guideButton.disabled = true;  // Disable until a guide is selected
   document.body.appendChild(guideButton);
 
-  // Fetching guide list and setting data-feature
-  const fetchGuidesButton = document.getElementById('fetch-guides');
-  
-  if (fetchGuidesButton) {
-    fetchGuidesButton.addEventListener('click', async function() {
-      try {
-        const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+  // Fetch the guides when the script loads
+  fetchGuides(dropdown, guideButton);
 
-        const guides = await response.json();
+  // Event listener for the guide button
+  guideButton.addEventListener('click', () => {
+    const selectedGuide = dropdown.value;
+    if (!selectedGuide) {
+      alert('Please select a guide from the dropdown to start the guide.');
+      return;
+    }
 
-        if (response.ok) {
-          // Store the fetched guide data
-          guidesData = guides;
-          console.log('Fetched guide data:', guidesData);
-
-          // Populate the dropdown with guide names
-          const dropdown = document.getElementById('guide-dropdown');
-          if (dropdown) {
-            dropdown.innerHTML = '<option value="">Select a guide...</option>'; // Clear existing options
-            guides.forEach(guide => {
-              const option = document.createElement('option');
-              option.value = guide.title;
-              option.textContent = guide.title;
-              dropdown.appendChild(option);
-            });
-
-            // Set data-feature when a guide is selected and get its events
-            dropdown.addEventListener('change', function() {
-              const selectedGuideName = dropdown.value;
-              if (selectedGuideName) {
-                const guideScript = document.getElementById('guide-script');
-                guideScript.setAttribute('data-feature', selectedGuideName);
-                alert(`Guide selected: ${selectedGuideName}`);
-                
-                // Get the events for the selected guide from the already fetched data
-                const selectedGuide = guidesData.find(guide => guide.title === selectedGuideName);
-                if (selectedGuide && selectedGuide.events) {
-                  selectedGuideEvents = selectedGuide.events;
-                  console.log(`Events for ${selectedGuideName} set:`, selectedGuideEvents);
-                } else {
-                  console.error(`No events found for the selected guide: ${selectedGuideName}`);
-                  selectedGuideEvents = [];
-                }
-              }
-            });
-          } else {
-            console.error("Dropdown element not found!");
-          }
-        } else {
-          console.error('Failed to fetch guides:', guides.message);
-        }
-      } catch (error) {
-        console.error('Error fetching guides:', error);
-      }
-    });
-  }
+    const guideData = getGuideData(selectedGuide);  // Get data for the selected guide
+    if (guideData) {
+      startGuide(guideData.events);
+    } else {
+      console.error('Guide data not found for:', selectedGuide);
+    }
+  });
 });
 
-// Function to start the guide based on selected events
+// Fetch the guides and populate the dropdown
+async function fetchGuides(dropdown, guideButton) {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides`);
+    const guides = await response.json();
+
+    if (response.ok) {
+      guideDataArray = guides;  // Store fetched guides in the global array
+      guides.forEach(guide => {
+        const option = document.createElement('option');
+        option.value = guide.name;  // Assuming `name` is unique
+        option.textContent = guide.name;
+        dropdown.appendChild(option);
+      });
+
+      dropdown.addEventListener('change', function() {
+        guideButton.disabled = dropdown.value === '';  // Enable button if a guide is selected
+      });
+    } else {
+      console.error('Failed to fetch guides:', guides.message);
+    }
+  } catch (error) {
+    console.error('Error fetching guides:', error);
+  }
+}
+
+// Function to get guide data based on the selected guide name
+function getGuideData(selectedGuide) {
+  return guideDataArray.find(guide => guide.name === selectedGuide);  // Adjust as necessary
+}
+
 function startGuide(events) {
   if (!events || events.length === 0) {
     console.error('No events found to guide the user.');
@@ -100,8 +79,8 @@ function startGuide(events) {
   guideUserThroughSteps(events);
 }
 
-// Function to guide the user through the steps
 function guideUserThroughSteps(events) {
+  console.log(events);
   events.forEach((event, index) => {
     setTimeout(() => {
       // Locate the target element using XPath
@@ -118,6 +97,7 @@ function guideUserThroughSteps(events) {
 
 // Function to highlight the element where the interaction happened
 function highlightElement(element, x, y, text) {
+  // Create a visual cursor or highlight effect
   const cursor = document.createElement('div');
   cursor.style.position = 'absolute';
   cursor.style.width = '20px';
@@ -130,6 +110,7 @@ function highlightElement(element, x, y, text) {
 
   document.body.appendChild(cursor);
 
+  // Create a text box to show next to the cursor
   const guideText = document.createElement('div');
   guideText.style.position = 'absolute';
   guideText.style.color = 'white';
@@ -139,18 +120,20 @@ function highlightElement(element, x, y, text) {
   guideText.style.fontSize = '14px';
   guideText.style.zIndex = '9999';
   guideText.style.top = `${y}px`;
-  guideText.style.left = `${x + 50}px`; // Display text next to cursor
+  guideText.style.left = `${x + 50}px`; // Text displayed 30px to the right of the cursor
 
   guideText.textContent = text || 'Step';
 
   document.body.appendChild(guideText);
 
-  element.style.outline = '2px solid blue';  // Highlight the element
+  // Highlight the actual element (like a button or input field)
+  element.style.outline = '2px solid blue';
 
+  // Remove the highlight and text after 1.5 seconds
   setTimeout(() => {
     cursor.remove();
     guideText.remove();
-    element.style.outline = '';  // Remove outline after 2 seconds
+    element.style.outline = '';  // Remove outline from the element
   }, 2000);
 }
 
