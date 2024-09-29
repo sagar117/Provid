@@ -46,6 +46,9 @@ app.get('/demo2', (req, res) => {
 app.get('/demo3', (req, res) => {
   res.sendFile(path.join(__dirname, '/', 'demo3.html'));
 });
+app.get('/demo4', (req, res) => {
+  res.sendFile(path.join(__dirname, '/', 'demo4.html'));
+});
 
 
 // Serve the login page
