@@ -2,8 +2,6 @@ const Org = require('../models/organization.model'); // Import the Organization 
 const User = require('../models/user.model'); // Import the User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Guide = require('../models/Guides'); // Assuming you have a Guide model
-
 
 
 // Create an organization and a user simultaneously

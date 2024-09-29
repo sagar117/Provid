@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth');
 
 // Route to create an organization and user simultaneously
 router.post('/create', orgController.createOrgAndUser);
-router.post('/saveRecording', orgController.saveRecording);
+router.post('/saveRecording', authMiddleware.authenticateJWT, orgController.saveGuide);
 
 
 module.exports = router;
