@@ -89,3 +89,49 @@ document.getElementById('save-recording').addEventListener('click', () => {
         }
     });
 });
+
+
+document.getElementById('fetch-guides').addEventListener('click', async () => {
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    const apiBaseUrl = 'http://34.71.54.137:3000'; // Replace with your actual server IP
+    
+    try {
+        const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides`, {
+            method: 'GET',
+            headers: {
+                // 'Authorization': `Bearer ${token}`, // Include JWT token
+            },
+        });
+
+        const guides = await response.json();
+
+        if (response.ok) {
+            console.log("Guides retrieved successfully:", guides);
+            displayGuides(guides);
+        } else {
+            console.error("Error retrieving guides:", guides.message);
+        }
+    } catch (error) {
+        console.error("Error fetching guides:", error);
+    }
+});
+
+function displayGuides(guides) {
+    const container = document.getElementById('guides-container');
+    container.innerHTML = ''; // Clear previous data
+
+    if (guides.length === 0) {
+        container.innerHTML = '<p>No guides found.</p>';
+        return;
+    }
+
+    guides.forEach(guide => {
+        const guideElement = document.createElement('div');
+        guideElement.innerHTML = `
+            <h3>${guide.title}</h3>
+            <p>${guide.description}</p>
+            <pre>${JSON.stringify(guide.events, null, 2)}</pre>
+        `;
+        container.appendChild(guideElement);
+    });
+}
