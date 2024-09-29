@@ -88,7 +88,8 @@ router.post('/refresh-token', (req, res) => {
 
 // Get a user by ID
 router.get('/users/:id', async (req, res) => {
-    const { id } = req.params;
+    const { username } = req.params; // Get the username from the request parameters
+
     try {
         const user = await User.findById(username); // Fetch a specific user by ID
         if (!user) {
