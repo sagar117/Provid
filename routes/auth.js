@@ -5,6 +5,8 @@ const router = express.Router();
 require('dotenv').config(); // Load environment variables
 const Organization = require('../models/organization.model'); // Make sure this is correctly imported
 const User = require('../models/user.model'); // Make sure this is correctly imported
+const authController = require('../controllers/auth.controller');
+
 
 const users = []; // In-memory user storage
 
@@ -59,38 +61,10 @@ router.post('/register', async (req, res) => {
 });
 
 
-// Login route
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    try{
-
-    // Find the user
-    const user = users.find(user => user.username === username);
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    // Compare passwords
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    const refreshToken = jwt.sign({ username: user.username }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
-
-    // Save the refresh token in the user’s record (optional)
-    user.refreshToken = refreshToken;
-    await user.save();
-
-    res.json({ accessToken, refreshToken });
-} catch (error){
-    res.status(500).json({ message: 'Something went wrong', error });
+// POST /api/auth/login
+router.post('/login', authController.login);
 
 
-}
-
-});
 // Token refresh route
 router.post('/refresh-token', (req, res) => {
     const { refreshToken } = req.body;

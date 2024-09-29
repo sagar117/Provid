@@ -9,7 +9,6 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     const payload = { username, password };
 
     try {
-        console.log("Yaha tak aaya");
         const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
             method: 'POST',
             headers: {
@@ -19,17 +18,16 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         });
 
         const data = await response.json();
-        
-        console.log("Response status:", response.status);  // Log response status
-        console.log("Response data:", data);  // Log the entire response data
+
+        console.log("Response status:", response.status); // Log response status
+        console.log("Response data:", data); // Log response data for debugging
 
         if (response.ok) {
             // Login was successful
             alert('Login successful!');
-            // Save token in localStorage or cookie
+            // Save token in localStorage or session storage
             localStorage.setItem('token', data.token);
             sessionStorage.setItem('refreshToken', data.refreshToken);
-            console.log("Login Successful");
 
             // Redirect user to dashboard or homepage
             window.location.href = '/dashboard.html';

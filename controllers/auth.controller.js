@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const Organization = require('../models/organization.model');
 
+
 console.log(jwt);
 
 // Registration handler
@@ -35,33 +36,49 @@ exports.register = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error });
     }
-};
+}
 
-// Login handler
+// User login
 exports.login = async (req, res) => {
     const { username, password } = req.body;
 
-    // Find the user
-    const user = await User.findOne({ username });
-    if (!user) {
-        console.log("not matching");
-        return res.status(401).json({ message: 'Invalid credentials' });
+    try {
+        // Find the user by username
+        const user = await User.findOne({ username }).populate('org_id');
+
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // Check if the password is correct
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: user._id, orgId: user.org_id._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const refreshToken = jwt.sign({ userId: user._id, orgId: user.org_id._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+        // Return success response
+        res.status(200).json({
+            message: 'Login successful',
+            token,
+            refreshToken,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                org: user.org_id.name
+            }
+        });
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
     }
-
-    // Compare passwords
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-        console.log(isPasswordValid);
-        return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    // Generate a JWT token
-    const token = jwt.sign({ username: user.username, id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    console.log(token);
-
-    res.json({ message: 'User logged in successfully', token });
 };
+
 
 // Organization creation handler
 exports.createOrganization = async (req, res) => {
