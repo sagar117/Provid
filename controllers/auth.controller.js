@@ -121,4 +121,7 @@ const getUserByUsername = async (req, res) => {
 module.exports = {
     // ... other exports,
     getUserByUsername,
+    login, 
+    register,
+    createOrganization, 
 };
