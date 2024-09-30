@@ -1,5 +1,6 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
+
   // DOM Elements
   const loginForm = document.getElementById('login-form');
   const signupForm = document.getElementById('signup-form');

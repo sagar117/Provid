@@ -17,12 +17,7 @@ chrome.storage.local.get('recordingData', async (result) => {
             const token = result.authToken;
             console.log('Auth token retrieved:', token);
 
-        // Fetch the or_id from local storage
-        chrome.storage.local.get(['org_id'], async (result) => {
-            const org_id = result.org_id;
-            console.log('Org Id retrieved:', org_id);
-        });
-
+     
 
         // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
 
@@ -31,6 +26,13 @@ chrome.storage.local.get('recordingData', async (result) => {
                 alert('Token not found. Please log in again.');
                 return;
             }
+
+               // Fetch the or_id from local storage
+        chrome.storage.local.get(['org_id'], async (result) => {
+            const org_id = result.org_id;
+            console.log('Org Id retrieved:', org_id);
+     
+
 
             // Construct the data object to send to the server
             const guideData = {
@@ -65,6 +67,7 @@ chrome.storage.local.get('recordingData', async (result) => {
                 console.error('Error during saving:', error);
                 alert('An error occurred while saving the guide.');
             }
+        });
         });
     } else {
         console.error("No recording data found.");
