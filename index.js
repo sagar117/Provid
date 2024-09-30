@@ -68,7 +68,7 @@ app.get('/create-org', (req, res) => {
 
 //Guide Management Dashboard
 app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, '/', 'dashoard.html'));
+  res.sendFile(path.join(__dirname, '/', 'dashboard.html'));
 });
 
 
