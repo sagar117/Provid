@@ -66,6 +66,11 @@ app.get('/create-org', (req, res) => {
   res.sendFile(path.join(__dirname, '/', 'create-org.html'));
 });
 
+//Guide Management Dashboard
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, '/', 'dashoard.html'));
+});
+
 
 // Upload recorded events
 app.post('/upload', (req, res) => {
