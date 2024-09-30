@@ -1,42 +1,59 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual server IP
 
-document.getElementById('loginForm').addEventListener('submit', async function (e) {
-    e.preventDefault(); // Prevent the form from submitting the traditional way
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    document.getElementById('login-btn').addEventListener('click', async function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        // Send login request
+        try {
+            const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+            
+            if (!response.ok) {
+                document.getElementById('error-msg').style.display = 'block';
+                return;
+            }
 
-    const payload = { username, password };
+            const data = await response.json();
+            const token = data.token;  // Assuming your backend returns a JWT or session token
 
-    try {
-        const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
+            // Store token in chrome local storage
+            chrome.storage.local.set({ authToken: token }, function() {
+                console.log('Token saved successfully');
+            });
 
-        const data = await response.json();
+            // Call the /me API to get user details
+            const meResponse = await fetch(`${apiBaseUrl}/api/auth/me`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
 
-        console.log("Response status:", response.status); // Log response status
-        console.log("Response data:", data); // Log response data for debugging
+            if (!meResponse.ok) {
+                console.error('Error fetching user details');
+                return;
+            }
 
-        if (response.ok) {
-            // Login was successful
-            alert('Login successful!');
-            // Save token in localStorage or session storage
-            localStorage.setItem('token', data.token);
-            sessionStorage.setItem('refreshToken', data.refreshToken);
+            const userData = await meResponse.json();
 
-            // Redirect user to dashboard or homepage
-            window.location.href = '/dashboard.html';
-        } else {
-            // Handle login failure
-            alert(data.message || 'Login failed');
+            // Save user details and organization details to chrome local storage
+            chrome.storage.local.set({
+                userDetails: userData.user,
+                orgDetails: userData.organization
+            }, function() {
+                console.log('User and Organization details saved');
+            });
+
+            // Redirect or perform further actions after successful login
+            window.location.href = 'dashboard.html';  // Redirect to dashboard page
+
+        } catch (error) {
+            console.error('Error during login:', error);
         }
-    } catch (error) {
-        console.error('Error during login:', error);
-        alert('An error occurred while trying to log in. Please try again.');
-    }
-});
+    });
