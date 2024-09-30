@@ -163,9 +163,9 @@ async function Getorgdetails(orgname){
         // org was successful
         alert('Org fetched');
     
-        const org_id = data.org_id;
+        const org_id = data.id;
         chrome.storage.local.set({ org_id: org_id }, function() {
-          console.log('org id token is saved.');
+          console.log('org id is saved.');
         });
 
     } else {
