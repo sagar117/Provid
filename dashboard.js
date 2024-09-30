@@ -39,9 +39,15 @@ function populateGuidesTable(guides) {
       <td>${guide.description}</td>
       <td>${guide.active ? 'Active' : 'Inactive'}</td>
       <td>
-        <button class="action-btn active" onclick="toggleGuideStatus('${guide.id}', true)">Activate</button>
-        <button class="action-btn inactive" onclick="toggleGuideStatus('${guide.id}', false)">Deactivate</button>
-        <button class="action-btn delete" onclick="deleteGuide('${guide.id}')">Delete</button>
+        <button class="action-btn" onclick="toggleGuideStatus('${guide.id}', true)">
+          <i class="fa fa-check"></i>
+        </button>
+        <button class="action-btn" onclick="toggleGuideStatus('${guide.id}', false)">
+          <i class="fa fa-times"></i>
+        </button>
+        <button class="action-btn" onclick="deleteGuide('${guide.id}')">
+          <i class="fa fa-trash"></i>
+        </button>
       </td>
     `;
 
@@ -135,6 +141,4 @@ function showFeedback(message, type) {
   feedbackElement.style.display = 'block';
 
   setTimeout(() => {
-    feedbackElement.style.display = 'none';
-  }, 3000);
-}
+    feedbackElement.style.display = '

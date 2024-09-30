@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guide Management Dashboard</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Adding Font Awesome for action icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
       body {
         font-family: 'Sans-serif';
@@ -40,24 +42,24 @@
       }
 
       .action-btn {
-        padding: 5px 10px;
-        background-color: #2a9d8f;
-        color: white;
+        padding: 5px;
         border: none;
-        border-radius: 3px;
+        background-color: transparent;
         cursor: pointer;
+        font-size: 18px;
+        margin-right: 5px;
       }
 
-      .action-btn.delete {
-        background-color: #ff5e57;
+      .action-btn .fa {
+        color: #2a9d8f;
       }
 
-      .action-btn.inactive {
-        background-color: #f4a261;
+      .action-btn .fa-times {
+        color: #f4a261;
       }
 
-      .action-btn.active {
-        background-color: #2a9d8f;
+      .action-btn .fa-trash {
+        color: #ff5e57;
       }
 
       .guide-form {
@@ -113,13 +115,13 @@
     <h2>Guide Management Dashboard</h2>
 
     <!-- Add/Edit Guide Form -->
-    <!-- <div class="guide-form">
+    <div class="guide-form">
       <h3>Create/Edit Guide</h3>
       <input type="text" id="guide-title" placeholder="Guide Title">
       <textarea id="guide-description" placeholder="Guide Description"></textarea>
       <button id="save-guide-btn">Save Guide</button>
       <p id="guide-feedback" class="alert" style="display: none;"></p>
-    </div> -->
+    </div>
 
     <!-- Guides Table -->
     <table>
