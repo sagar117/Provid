@@ -83,7 +83,7 @@ document.getElementById('login-btn').addEventListener('click', async () => {
           console.log('Auth token is saved.');
         });
         sessionStorage.setItem('refreshToken', data.refreshToken);
-        org_name = data.user.id
+        org_name = data.user.org
         showRecorderSection();
         Getorgdetails(org_name);
 
