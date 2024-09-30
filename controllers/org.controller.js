@@ -86,3 +86,37 @@ exports.getGuides = async (req, res) => {
     }
 };
 
+exports.getorgguides =async (req,res) => {
+    const { organization } = req.params;
+
+    try {
+        const org_id = await Guide.findOne({ organization });
+        if (!org_id) {
+            return res.status(404).json({ message: 'No guide present for this org' });
+        }
+        res.status(200).json(organization);
+    } catch (error) {
+        console.error('Error fetching guides:', error);
+        res.status(500).json({ message: 'Error fetching guides', error });
+    }
+};
+
+exports.getOrgdetails =async(req,res) => {
+    const {name} =req.params;
+    try{
+        const org_name = await Org.findOne({name});
+        if (!org_name){
+            return res.status(404).json({ message: 'No Org linked to this organization Id' });
+        }
+        res.status(200).json(organization);
+        console.log(organization);
+
+    }catch (error) {
+        console.error('Error fetching organization:', error);
+        res.status(500).json({ message: 'Error fetching organization', error });
+
+    }
+};
+
+
+

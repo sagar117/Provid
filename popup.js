@@ -83,7 +83,9 @@ document.getElementById('login-btn').addEventListener('click', async () => {
           console.log('Auth token is saved.');
         });
         sessionStorage.setItem('refreshToken', data.refreshToken);
+        org_name = data.user.id
         showRecorderSection();
+        Getorgdetails(org_name);
 
         // Redirect user to dashboard or homepage
         // window.location.href = '/dashboard.html';
@@ -140,6 +142,42 @@ logoutBtn.addEventListener('click', () => {
 function showRecorderSection() {
   authSection.style.display = 'none';
   recorderSection.style.display = 'block';
+}
+
+async function Getorgdetails(orgname){
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/orgs/${orgname}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    console.log("Response status:", response.status); // Log response status
+    console.log("Response data:", data); // Log response data for debugging
+
+    if (response.ok) {
+        // org was successful
+        alert('Org fetched');
+    
+        const org_id = data.org_id;
+        chrome.storage.local.set({ org_id: org_id }, function() {
+          console.log('Auth token is saved.');
+        });
+
+    } else {
+        // Handle org failure
+        alert(data.message || 'Org get failed');
+    }
+} catch (error) {
+    console.error('Error during login:', error);
+    alert('An error occurred while trying to log in. Please try again.');
+}
+
+
 }
 
 // Function to show the login form
