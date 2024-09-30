@@ -141,4 +141,6 @@ function showFeedback(message, type) {
   feedbackElement.style.display = 'block';
 
   setTimeout(() => {
-    feedbackElement.style.display = '
+    feedbackElement.style.display = 'none';
+  }, 3000);
+}
