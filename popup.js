@@ -164,7 +164,7 @@ async function Getorgdetails(orgname){
         // org was successful
         alert('Org fetched');
     
-        const org_id = data.id;
+        const org_id = data._id;
         chrome.storage.local.set({ org_id: org_id }, function() {
           console.log('org id is saved.',org_id);
         });
