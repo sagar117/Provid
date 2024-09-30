@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fetch guides from the backend
 async function fetchGuides() {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides`);
+    const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides/${org_id}`);
     const data = await response.json();
     
     if (response.ok) {

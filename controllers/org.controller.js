@@ -3,6 +3,7 @@ const User = require('../models/user.model'); // Import the User model
 const Guide = require('../models/Guides'); // Import the User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Organization = require('../models/organization.model');
 
 
 // Create an organization and a user simultaneously
@@ -88,13 +89,14 @@ exports.getGuides = async (req, res) => {
 
 exports.getorgguides =async (req,res) => {
     const { organization } = req.params;
+    console.log(organization);
 
     try {
-        const org_id = await Guide.findOne({ organization });
-        if (!org_id) {
+        const org_guide = await Guide.findOne({ organization });
+        if (!org_guide) {
             return res.status(404).json({ message: 'No guide present for this org' });
         }
-        res.status(200).json(organization);
+        res.status(200).json(org_guide);
     } catch (error) {
         console.error('Error fetching guides:', error);
         res.status(500).json({ message: 'Error fetching guides', error });
