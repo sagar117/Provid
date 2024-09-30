@@ -121,7 +121,7 @@ const getUserByUsername = async (req, res) => {
 const me = async (req, res) => {
     try {
         // Extract the user ID from the authenticated request (e.g., from a JWT token or session)
-        const userId = req.user._id; // Assume req.user contains the authenticated user's data
+        const userId = req.user.id; // Assume req.user contains the authenticated user's data
 
         // Fetch user details
         const user = await User.findById(userId);
