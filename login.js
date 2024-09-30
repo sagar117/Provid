@@ -63,7 +63,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             // }, function() {
             //     console.log('User and Organization details saved');
             // });
-            localStorage.setItem('org_id',userData.organization.id);
+            localStorage.setItem('org_id',userData.user.id);
 
             // chrome.storage.local.set({ authToken: authToken }, function() {
             //     console.log('Auth token is saved.');
