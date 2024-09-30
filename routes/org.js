@@ -6,7 +6,7 @@ const orgController = require('../controllers/org.controller');
 router.post('/create', orgController.createOrgAndUser);
 router.post('/saveGuide', orgController.saveGuide);
 router.get('/getGuides', orgController.getGuides);
-router.get('/getGuides/:orgId', orgController.getorgguides);
+router.get('/getGuides/:organization', orgController.getorgguides);
 // router.put('/guides/:guideId',orgController.updateguide);
 // router.delete('/:guideId',orgController.deleteguide);
 // router.put('/guides/:guideId/status',orgController.updateguidestaus);
