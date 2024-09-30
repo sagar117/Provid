@@ -11,7 +11,7 @@ router.get('/getGuides', orgController.getGuides);
 // router.delete('/:guideId',orgController.deleteguide);
 // router.put('/guides/:guideId/status',orgController.updateguidestaus);
 
-router.get('/organization/:orgname', orgController.getOrgdetails);
+router.get('/organization/:name', orgController.getOrgdetails);
 
 
 
