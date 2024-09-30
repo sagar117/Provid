@@ -117,6 +117,49 @@ const getUserByUsername = async (req, res) => {
     }
 };
 
+
+exports.me = async (req, res) => {
+    try {
+        // Extract the user ID from the authenticated request (e.g., from a JWT token or session)
+        const userId = req.user._id; // Assume req.user contains the authenticated user's data
+
+        // Fetch user details
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Fetch organization details using the user's orgId
+        const organization = await Org.findById(user.orgId);
+        if (!organization) {
+            return res.status(404).json({ message: 'Organization not found' });
+        }
+
+        // Combine user and organization details into the response
+        const userDetails = {
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,  // Add other user fields as necessary
+            },
+            organization: {
+                id: organization._id,
+                name: organization.name,
+                description: organization.description,
+                address: organization.address,  // Add other org fields as necessary
+            }
+        };
+
+        // Send back the combined user and organization details
+        res.status(200).json(userDetails);
+
+    } catch (error) {
+        console.error('Error fetching user or organization details:', error);
+        res.status(500).json({ message: 'Internal server error', error });
+    }
+};
+
 // Exporting the functions
 module.exports = {
     // ... other exports,

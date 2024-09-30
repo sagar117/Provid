@@ -64,6 +64,9 @@ router.post('/register', async (req, res) => {
 // POST /api/auth/login
 router.post('/login', authController.login);
 
+// POST /api/auth/login
+router.post('/me', authController.me);
+
 
 // Token refresh route
 router.post('/refresh-token', (req, res) => {

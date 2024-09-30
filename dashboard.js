@@ -14,12 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fetch guides from the backend
 async function fetchGuides() {
   try {
-    chrome.storage.local.get(['org_id'], async (result) => {
-        const org_id = result.org_id;
-        console.log('Org Id retrieved:', org_id);
- 
 
-    // const org_id = localStorage.getItem('ororg_idg');
+    // const org_id = localStorage.getItem('token');
     console.log('org_id',org_id);
     const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides/${org_id}`);
     const data = await response.json();
@@ -30,7 +26,6 @@ async function fetchGuides() {
     } else {
       console.error('Error fetching guides:', data.message);
     }
-});
   } catch (error) {
     console.error('Error fetching guides:', error);
   }
