@@ -43,7 +43,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             const meResponse = await fetch(`${apiBaseUrl}/api/auth/me`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `${authToken}`,
+                    'Authorization': authToken,
                 },
             });
 
