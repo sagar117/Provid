@@ -53,7 +53,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             }
 
             const userData = await meResponse.json();
-            console.log(userData);
+            console.log(userData.user);
 
             // // Save user details and organization details to chrome local storage
             // chrome.storage.local.set({
