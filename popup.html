@@ -2,52 +2,145 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+        font-family: 'Sans-serif';
+        background-color: white;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        width: 450px; /* Increased width for square shape */
+        height: 450px; /* Increased height for square shape */
+        box-sizing: border-box;
+      }
+
+      h2, h3 {
+        color: #2a9d8f;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #2a9d8f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+      }
+
+      #logout-btn {
+        background-color: #ff5e57;
+      }
+
+      #login-error, #signup-error {
+        color: red;
+        text-align: center;
+        margin: 5px 0;
+      }
+
+      a {
+        color: #2a9d8f;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      #record-info {
+        margin-top: 20px;
+      }
+
+      #recorded-info {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      #auth-section {
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      #recorder-section {
+        display: none;
+      }
+
+      @media (max-width: 2000px) {
+        h2, h3 {
+          font-size: 20px;
+        }
+        body {
+          width: 400px;  /* For small screens, use full width */
+        }
+      }
+    </style>
   </head>
   <body>
     <h2 id="heading">Feature Recorder</h2>
 
-        <!-- Login and Signup Forms -->
-        <div id="auth-section">
-          <div id="login-form" style="display: none;">
-            <h3>Login</h3>
-            <input type="text" id="login-username" placeholder="Username" />
-            <input type="password" id="login-password" placeholder="Password" />
-            <button id="login-btn">Login</button>
-            <p id="login-error" style="color: red;"></p>
-            <p>Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
-          </div>
-    
-          <div id="signup-form" style="display: none;">
-            <h3>Sign Up</h3>
-            <input type="text" id="signup-org" placeholder="Organization Name" />
-            <input type="text" id="signup-email" placeholder="Email" />
-            <input type="password" id="signup-password" placeholder="Password" />
-            <button id="signup-btn">Sign Up</button>
-            <p id="signup-error" style="color: red;"></p>
-            <p>Already have an account? <a href="#" id="switch-to-login">Log in</a></p>
-          </div>
-        </div>
-        <div id="recorder-section" style="display: none;">
+    <!-- Login and Signup Forms -->
+    <div id="auth-section">
+      <div id="login-form" style="display: none;">
+        <h3>Login</h3>
+        <input type="text" id="login-username" placeholder="Username" />
+        <input type="password" id="login-password" placeholder="Password" />
+        <button id="login-btn">Login</button>
+        <p id="login-error"></p>
+        <p>Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
+      </div>
 
-    <!-- <h2>Feature Recorder</h2> -->
-    <button id="start-recording">Start Recording</button>
-    <button id="stop-recording" disabled>Stop Recording</button>
-    <button id="load-recording">Load Saved Recording</button>
-    <pre id="recorded-info"></pre>
-    
-    <div id="record-info" style="display:none;">
-      <input type="text" id="feature-name" placeholder="Feature Name" />
-      <textarea id="feature-description" placeholder="Description"></textarea>
-      <button id="save-recording">Save Recording</button>
+      <div id="signup-form" style="display: none;">
+        <h3>Sign Up</h3>
+        <input type="text" id="signup-org" placeholder="Organization Name" />
+        <input type="text" id="signup-email" placeholder="Email" />
+        <input type="password" id="signup-password" placeholder="Password" />
+        <button id="signup-btn">Sign Up</button>
+        <p id="signup-error"></p>
+        <p>Already have an account? <a href="#" id="switch-to-login">Log in</a></p>
+      </div>
     </div>
 
-    <button id="upload-btn">Go to Upload Page</button>
+    <!-- Recorder Section -->
+    <div id="recorder-section" style="display: none;">
+      <button id="start-recording">Start Recording</button>
+      <button id="stop-recording" disabled>Stop Recording</button>
+      <button id="load-recording">Load Saved Recording</button>
+      <pre id="recorded-info"></pre>
+
+      <div id="record-info" style="display:none;">
+        <input type="text" id="feature-name" placeholder="Feature Name" />
+        <textarea id="feature-description" placeholder="Description"></textarea>
+        <button id="save-recording">Save Recording</button>
+      </div>
+
+      <button id="upload-btn">Go to Upload Page</button>
+      <button id="logout-btn" style="display: block;">Log Out</button>
+
     </div>
-    <button id="logout-btn">Log Out</button>
+
+    <!-- Logout Button -->
 
     <script src="popup.js"></script>
   </body>
 </html>
-

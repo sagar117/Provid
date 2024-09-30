@@ -1,18 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide Management</title>
-</head>
-<body>
-    <h1>Guide Management</h1>
-    <form id="guideForm">
-        <input type="text" id="guideName" placeholder="Guide Name" required />
-        <textarea id="guideDescription" placeholder="Guide Description" required></textarea>
-        <button type="submit">Create Guide</button>
-    </form>
-    <script type="module" src="dashbaord.js"></script>
-</body>
-</html>
+    <title>Guide Management Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+        font-family: 'Sans-serif';
+        background-color: white;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+      }
 
+      h2 {
+        color: #2a9d8f;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      table th, table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #2a9d8f;
+        color: white;
+      }
+
+      .action-btn {
+        padding: 5px 10px;
+        background-color: #2a9d8f;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .action-btn.delete {
+        background-color: #ff5e57;
+      }
+
+      .action-btn.inactive {
+        background-color: #f4a261;
+      }
+
+      .action-btn.active {
+        background-color: #2a9d8f;
+      }
+
+      .guide-form {
+        background-color: #f4f4f4;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      button {
+        background-color: #2a9d8f;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+      }
+
+      .alert {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      .alert.success {
+        background-color: #2a9d8f;
+        color: white;
+      }
+
+      .alert.error {
+        background-color: #ff5e57;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Guide Management Dashboard</h2>
+
+    <!-- Add/Edit Guide Form -->
+    <div class="guide-form">
+      <h3>Create/Edit Guide</h3>
+      <input type="text" id="guide-title" placeholder="Guide Title">
+      <textarea id="guide-description" placeholder="Guide Description"></textarea>
+      <button id="save-guide-btn">Save Guide</button>
+      <p id="guide-feedback" class="alert" style="display: none;"></p>
+    </div>
+
+    <!-- Guides Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="guides-table-body">
+        <!-- Guides will be dynamically populated here -->
+      </tbody>
+    </table>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

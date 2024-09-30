@@ -108,7 +108,7 @@ function guideUserThroughSteps(events) {
       setTimeout(() => {
         currentEventIndex++; // Increment event index
         guideUserThroughSteps(events); // Continue to the next step
-      }, 3000); // Adjust delay as needed
+      }, 2000); // Adjust delay as needed
     }
   } else {
     console.warn(`Target element not found for event at: ${event.xpath}`);
