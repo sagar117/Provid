@@ -21,6 +21,8 @@ chrome.storage.local.get('recordingData', async (result) => {
         chrome.storage.local.get(['org_id'], async (result) => {
             const org_id = result.org_id;
             console.log('Auth token retrieved:', org_id);
+        });
+
 
         // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
 
