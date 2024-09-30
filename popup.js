@@ -151,7 +151,7 @@ async function Getorgdetails(orgname){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
+        // body: JSON.stringify(payload)
     });
 
     const data = await response.json();
@@ -165,7 +165,7 @@ async function Getorgdetails(orgname){
     
         const org_id = data.org_id;
         chrome.storage.local.set({ org_id: org_id }, function() {
-          console.log('Auth token is saved.');
+          console.log('org id token is saved.');
         });
 
     } else {
