@@ -31,7 +31,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             // Call the /me API to get user details
             const meResponse = await fetch(`${apiBaseUrl}/api/auth/me`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `${token}`,
                 },
             });
 
