@@ -110,7 +110,8 @@ exports.getOrgdetails =async(req,res) => {
             return res.status(404).json({ message: 'No Org Found' });
         }
         res.status(200).json(organization);
-        console.log(organization);
+        console.log(organization.id);
+        
 
     }catch (error) {
         console.error('Error fetching organization:', error);
