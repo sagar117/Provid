@@ -17,6 +17,11 @@ chrome.storage.local.get('recordingData', async (result) => {
             const token = result.authToken;
             console.log('Auth token retrieved:', token);
 
+        // Fetch the or_id from local storage
+        chrome.storage.local.get(['org_id'], async (result) => {
+            const org_id = result.org_id;
+            console.log('Auth token retrieved:', org_id);
+
         // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY4Yzk5MDhmZTkxMjE4MTk5Zjc0MmEiLCJvcmdJZCI6IjY2ZjhjOTkwOGZlOTEyMTgxOTlmNzQyOCIsImlhdCI6MTcyNzU5MzY0MSwiZXhwIjoxNzI3NTk3MjQxfQ.7inOIjrPRxKN6FWMmRrjtXEbUXO8vZmH_4K1NyTTEFw';
 
             if (!token) {
@@ -30,7 +35,7 @@ chrome.storage.local.get('recordingData', async (result) => {
                 title,
                 description,
                 events,
-                orgId: localStorage.getItem('orgId'), // Replace with the actual organization ID
+                orgId: org_id, // Replace with the actual organization ID
             };
 
             // Sending the data to the server
