@@ -1,6 +1,8 @@
 const apiBaseUrl = 'http://34.71.54.137:3000';  // Update to your backend server
 let guides = [];  // Store guides for easy access
 
+
+
 // On DOMContentLoaded, fetch the guides for this org
 document.addEventListener('DOMContentLoaded', () => {
   fetchGuides();
@@ -12,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fetch guides from the backend
 async function fetchGuides() {
   try {
+    const org_id = localStorage.getItem('ororg_idg');
+    console.log('org_id',org_id);
     const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides/${org_id}`);
     const data = await response.json();
     
