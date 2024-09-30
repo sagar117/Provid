@@ -146,7 +146,7 @@ function showRecorderSection() {
 
 async function Getorgdetails(orgname){
   try {
-    const response = await fetch(`${apiBaseUrl}/api/orgs//organization/${orgname}`, {
+    const response = await fetch(`${apiBaseUrl}/api/orgs/organization/${orgname}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

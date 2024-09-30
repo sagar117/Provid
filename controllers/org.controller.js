@@ -104,8 +104,8 @@ exports.getorgguides =async (req,res) => {
 exports.getOrgdetails =async(req,res) => {
     const {name} =req.params;
     try{
-        const org_name = await Org.findOne({name});
-        if (!org_name){
+        const organization = await Org.findOne({name});
+        if (!organization){
             return res.status(404).json({ message: 'No Org linked to this organization Id' });
         }
         res.status(200).json(organization);
