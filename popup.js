@@ -155,6 +155,7 @@ async function Getorgdetails(orgname){
     });
 
     const data = await response.json();
+    console.log(data);
 
     console.log("Response status:", response.status); // Log response status
     console.log("Response data:", data); // Log response data for debugging
