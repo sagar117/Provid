@@ -158,7 +158,7 @@ async function Getorgdetails(orgname){
     // console.log(data);
 
     console.log("Response status:", response.status); // Log response status
-    console.log("Response data:", data.id); // Log response data for debugging
+    console.log("Response data:", data._id); // Log response data for debugging
 
     if (response.ok) {
         // org was successful
