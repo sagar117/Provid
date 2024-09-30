@@ -130,6 +130,8 @@ const me = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        console.log(user.org_id);
+
         // Fetch organization details using the user's orgId
         const organization = await Organization.findById(user.orgId);
         if (!organization) {
