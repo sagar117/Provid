@@ -103,10 +103,11 @@ exports.getorgguides =async (req,res) => {
 
 exports.getOrgdetails =async(req,res) => {
     const {name} =req.params;
+    console.log(name);
     try{
         const organization = await Org.findOne({name});
         if (!organization){
-            return res.status(404).json({ message: 'No Org linked to this organization Id' });
+            return res.status(404).json({ message: 'No Org Found' });
         }
         res.status(200).json(organization);
         console.log(organization);
