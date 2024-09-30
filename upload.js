@@ -19,8 +19,8 @@ chrome.storage.local.get('recordingData', async (result) => {
 
         // Fetch the or_id from local storage
         chrome.storage.local.get(['org_id'], async (result) => {
-            const org_id = result.org_id;
-            console.log('Auth token retrieved:', org_id);
+            const org_id = result;
+            console.log('Org Id retrieved:', org_id);
         });
 
 
