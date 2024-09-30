@@ -25,7 +25,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             const data = await response.json();
         
             console.log("Response status:", response.status); // Log response status
-            console.log("Response data:", data); // Log response data for debugging
+            console.log("Response data:", data.token); // Log response data for debugging
         
             if (response.ok) {
                 // Login was successful
