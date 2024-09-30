@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Fetch guides from the backend
-// async function fetchGuides() {
+async function fetchGuides() {
 //     chrome.storage.local.get(['org_id'], async (result) => {
 //         const org_id = result.org_id;
 //         console.log('Org Id retrieved:', org_id);
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch (error) {
     console.error('Error fetching guides:', error);
-//   }
+  }
 // });
 }
 
