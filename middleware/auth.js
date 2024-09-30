@@ -14,6 +14,8 @@ const authenticateJWT = (req, res, next) => {
         // Attach the user ID to the request object
         req.user = { id: decoded.userId };  // This userId is what we embedded in the token when logging in
 
+        console.log(decoded.userId);
+
         // Proceed to the next middleware or route handler
         next();
 
