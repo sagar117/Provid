@@ -6,6 +6,8 @@ require('dotenv').config(); // Load environment variables
 const Organization = require('../models/organization.model'); // Make sure this is correctly imported
 const User = require('../models/user.model'); // Make sure this is correctly imported
 const authController = require('../controllers/auth.controller');
+const authenticateUser = require('../middleware/auth');  // Your middleware
+
 
 
 const users = []; // In-memory user storage
@@ -65,7 +67,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', authController.login);
 
 // GET /api/auth/me
-router.get('/me', authController.me);
+router.get('/me',authenticateUser,authController.me);
 
 
 // Token refresh route
