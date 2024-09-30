@@ -57,12 +57,16 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             console.log(userData.user);
 
             // Save user details and organization details to chrome local storage
-            chrome.storage.local.set({
+            chrome.storage.sync.set({
                 userDetails: userData.user,
                 orgDetails: userData.organization
             }, function() {
                 console.log('User and Organization details saved');
             });
+
+            // chrome.storage.local.set({ authToken: authToken }, function() {
+            //     console.log('Auth token is saved.');
+            //   });
 
             // Redirect or perform further actions after successful login
             window.location.href = 'dashboard.html';  // Redirect to dashboard page
