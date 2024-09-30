@@ -32,7 +32,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
                 alert('Login successful!');
                 // Save token in localStorage or session storage
                 localStorage.setItem('token', data.token);
-                const authToken = data.token;
+                const authToken = `Bearer ${data.token}`;
                 // chrome.storage.local.set({ authToken: authToken }, function() {
                 //   console.log('Auth token is saved.');
                 // });
@@ -43,7 +43,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             const meResponse = await fetch(`${apiBaseUrl}/api/auth/me`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': '${authToken}',
+                    'Authorization': authToken,
                 },
             });
 
