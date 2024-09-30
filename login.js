@@ -53,14 +53,15 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             }
 
             const userData = await meResponse.json();
+            console.log(userData);
 
-            // Save user details and organization details to chrome local storage
-            chrome.storage.local.set({
-                userDetails: userData.user,
-                orgDetails: userData.organization
-            }, function() {
-                console.log('User and Organization details saved');
-            });
+            // // Save user details and organization details to chrome local storage
+            // chrome.storage.local.set({
+            //     userDetails: userData.user,
+            //     orgDetails: userData.organization
+            // }, function() {
+            //     console.log('User and Organization details saved');
+            // });
 
             // Redirect or perform further actions after successful login
             window.location.href = 'dashboard.html';  // Redirect to dashboard page
