@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchGuides() {
   try {
 
+    const org_id = localStorage.getItem('org_id');
+
     // const org_id = localStorage.getItem('token');
     console.log('org_id',org_id);
     const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides/${org_id}`);
