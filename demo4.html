@@ -2,24 +2,217 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Feature Recorder - Replace Product Tutorials with In-App Guides</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Include Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <title>Feature Recorder - Replace Product Tutorials with In-App Guides</title>
+
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #2a9d8f;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #2a9d8f;
+        }
+
+        .logo {
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .cta {
+            background-color: #ffffff;
+            color: #2a9d8f;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 50px;
+            background-color: #f7f9f9;
+        }
+
+        .hero-content {
+            max-width: 50%;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Metrics & Benefits Section */
+        .metrics {
+            padding: 50px;
+            background-color: #e0f7fa;
+            text-align: center;
+        }
+
+        .metrics h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .metrics-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .metric-item {
+            max-width: 250px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-item h3 {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            color: #2a9d8f;
+        }
+
+        .metric-item p {
+            color: #777;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .features-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            max-width: 250px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-item h3 {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            color: #2a9d8f;
+        }
+
+        .feature-item p {
+            color: #777;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #2a9d8f;
+            color: #fff;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding: 50px 20px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                text-align: center;
+            }
+
+            .hero-image {
+                margin-top: 20px;
+            }
+
+            .metrics-container, .features-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .metric-item, .feature-item {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header Section -->
+    <!-- Navbar -->
     <header>
         <nav class="navbar">
             <div class="logo">Feature Recorder</div>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
-                <li><a href="#benefits">Benefits</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -40,16 +233,60 @@
         </div>
     </section>
 
+    <!-- Metrics & Benefits Section -->
+    <section id="metrics" class="metrics">
+        <h2>Why Choose Feature Recorder?</h2>
+        <div class="metrics-container">
+            <div class="metric-item">
+                <h3>Reduce Customer Queries by 60%</h3>
+                <p>With in-app guides, customers find answers without contacting support.</p>
+            </div>
+            <div class="metric-item">
+                <h3>Reduce Training Costs & Time</h3>
+                <p>Streamline onboarding by eliminating the need for expensive training programs.</p>
+            </div>
+            <div class="metric-item">
+                <h3>Onboard Users 2x Faster</h3>
+                <p>Interactive, step-by-step guidance speeds up the learning curve.</p>
+            </div>
+            <div class="metric-item">
+                <h3>Easy Integration</h3>
+                <p>Add a single line of code to your app to start using Feature Recorder.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section id="features" class="features">
         <h2>Features</h2>
         <div class="features-container">
             <div class="feature-item">
-                <i class="fa fa-record-vinyl fa-3x"></i>
+                <i class="fas fa-record-vinyl fa-3x"></i>
                 <h3>Record Interactions</h3>
                 <p>Easily record your feature walkthroughs with our intuitive browser extension.</p>
             </div>
             <div class="feature-item">
-                <i class="fa fa-save fa-3x"></i>
+                <i class="fas fa-save fa-3x"></i>
                 <h3>Save & Manage Guides</h3>
-                <p>Organize your guides in one place with our
+                <p>Organize your guides in one place and access them at any time.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-chart-bar fa-3x"></i>
+                <h3>Analytics</h3>
+                <p>Track user engagement and interactions to improve your product’s UX.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Feature Recorder © 2024 | All Rights Reserved</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Placeholder for interactive scripts if needed
+    </script>
+
+</body>
+</html>
