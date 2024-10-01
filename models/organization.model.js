@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Counter = require('./counter'); // Import the counter model
+const Counter = require('../models/counters'); // Import the counter model
 
 
 const organizationSchema = new mongoose.Schema({
