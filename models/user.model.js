@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Counter = require('./counter'); // Import the counter model
+
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
