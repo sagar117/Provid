@@ -13,6 +13,39 @@ const userSchema = new mongoose.Schema({
     // Add any other fields necessary for your user model
 });
 
+// Before saving, get the next sequence for userId
+userSchema.pre('save', async function(next) {
+    const user = this;
+  
+    if (user.isNew) {
+      try {
+        // Get the next userId
+        const counter = await Counter.findByIdAndUpdate(
+          { _id: 'user' },
+          { $inc: { seq: 1 } },
+          { new: true, upsert: true }
+        );
+        user.userId = counter.seq;
+  
+        // Get the next orgId for new orgs if needed
+        if (!user.org_id) {
+          const orgCounter = await Counter.findByIdAndUpdate(
+            { _id: 'org' },
+            { $inc: { seq: 1 } },
+            { new: true, upsert: true }
+          );
+          user.org_id = orgCounter.seq;
+        }
+  
+        next();
+      } catch (err) {
+        next(err);
+      }
+    } else {
+      next();
+    }
+  });
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

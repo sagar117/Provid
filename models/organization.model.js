@@ -9,6 +9,29 @@ const organizationSchema = new mongoose.Schema({
     // Add any other fields necessary for your organization model
 });
 
+// Before saving, get the next sequence for orgId
+organizationSchema.pre('save', async function(next) {
+    const organization = this;
+
+    if (organization.isNew) {
+        try {
+            // Get the next orgId
+            const counter = await Counter.findByIdAndUpdate(
+                { _id: 'org' },
+                { $inc: { seq: 1 } },
+                { new: true, upsert: true }
+            );
+            organization.orgId = counter.seq;
+
+            next();
+        } catch (err) {
+            next(err);
+        }
+    } else {
+        next();
+    }
+});
+
 const Organization = mongoose.model('Organization', organizationSchema);
 
 module.exports = Organization;
