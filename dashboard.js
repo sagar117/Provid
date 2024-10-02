@@ -65,6 +65,7 @@ function populateGuidesTable(guides) {
       </td>
     `;
     const actionsCell = document.createElement('td');
+    generateProductDoc(guide.events);
 
     // Button to generate product document using OpenAI
     const generateDocButton = document.createElement('button');
