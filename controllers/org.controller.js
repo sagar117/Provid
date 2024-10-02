@@ -4,6 +4,9 @@ const Guide = require('../models/Guides'); // Import the User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Organization = require('../models/organization.model');
+const https = require("https");
+const fs = require('fs');
+const util = require('util');
 require('dotenv').config();
 const apiKey = process.env.apiKey;
 
