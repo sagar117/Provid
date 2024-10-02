@@ -9,6 +9,8 @@ const fs = require('fs');
 const util = require('util');
 require('dotenv').config();
 const apiKey = process.env.apiKey;
+import OpenAI from "openai";
+const openai = new OpenAI();
 
 
 // Create an organization and a user simultaneously
@@ -130,58 +132,21 @@ exports.getOrgdetails =async(req,res) => {
 exports.openairesponse = async (req, res) => {
     const { prompt } = req.body;
 
-    const data = JSON.stringify({
-        model: "gpt-3.5-turbo",
+    const completion = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
         messages: [
-            { role: "user", content: prompt }
-        ]
+            { role: "system", content: "You are a helpful assistant." },
+            {
+                role: "user",
+                content: prompt,
+            },
+        ],
     });
 
-    const options = {
-        hostname: 'api.openai.com',
-        path: '/v1/chat/completions',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': data.length,
-            'Authorization': `Bearer ${apiKey}`,
-        },
-    };
+    res.status(200).json(completion.choices[0].message));
+    console.log(completion.choices[0].message);
+    
 
-    const request = https.request(options, (response) => {
-        let responseData = '';
-
-        // Collect the data
-        response.on('data', (chunk) => {
-            responseData += chunk;
-        });
-
-        // Once the data collection is complete
-        response.on('end', () => {
-            try {
-                const parsedData = JSON.parse(responseData);
-                if (parsedData && parsedData.choices && parsedData.choices.length > 0) {
-                    // Send the OpenAI API response back to the user
-                    res.status(200).json(parsedData.choices[0].message);
-                } else {
-                    res.status(500).json({ error: "Invalid response from OpenAI API" });
-                }
-            } catch (error) {
-                // Handle JSON parse errors
-                res.status(500).json({ error: "Failed to parse OpenAI API response" });
-            }
-        });
-    });
-
-    // Handle request errors
-    request.on('error', (error) => {
-        console.error('Error with the OpenAI API request:', error);
-        res.status(500).json({ error: 'API request failed' });
-    });
-
-    // Write the data and end the request
-    request.write(data);
-    request.end();
 };
 
 
