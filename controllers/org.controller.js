@@ -9,7 +9,7 @@ const fs = require('fs');
 const util = require('util');
 require('dotenv').config();
 // const apiKey = process.env.apiKey;
-import OpenAI from "openai";
+const OpenAI = require("openai");
 
 
 // Create an organization and a user simultaneously
