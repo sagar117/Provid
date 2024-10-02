@@ -188,6 +188,7 @@ function showFeedback(message, type) {
       displayGeneratedDoc(result);  // Function to show the generated document
       productDocContent.textContent = result.message;
     productDocContainer.style.display = 'block';
+    console.log("isme aaya",result);
     } catch (error) {
       console.error('Error generating product document:', error);
     }
