@@ -8,9 +8,8 @@ const https = require("https");
 const fs = require('fs');
 const util = require('util');
 require('dotenv').config();
-const apiKey = process.env.apiKey;
+// const apiKey = process.env.apiKey;
 import OpenAI from "openai";
-const openai = new OpenAI();
 
 
 // Create an organization and a user simultaneously
@@ -129,24 +128,30 @@ exports.getOrgdetails =async(req,res) => {
     }
 };
 
-exports.openairesponse = async (req, res) => {
+// Initialize the OpenAI client with your API key
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,  // Load API key from environment variables
+});
+
+export const openairesponse = async (req, res) => {
     const { prompt } = req.body;
 
-    const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-            { role: "system", content: "You are a helpful assistant." },
-            {
-                role: "user",
-                content: prompt,
-            },
-        ],
-    });
+    try {
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",  // Specify the model
+            messages: [
+                { role: "system", content: "You are a helpful assistant." },
+                { role: "user", content: prompt }
+            ],
+        });
 
-    res.status(200).json(completion.choices[0].message));
-    console.log(completion.choices[0].message);
-    
-
+        // Extract and send the message content
+        const message = completion.choices[0].message.content;
+        res.status(200).json({ message });
+    } catch (error) {
+        console.error("Error with OpenAI API:", error);
+        res.status(500).json({ error: "Failed to fetch response from OpenAI API" });
+    }
 };
 
 
