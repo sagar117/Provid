@@ -70,7 +70,17 @@ const login = async (req, res) => {
                 id: user._id,
                 username: user.username,
                 email: user.email,
-                org: user.org_id.name
+                org: user.org_id.name,
+                orgId: user.org_id.orgId
+                // "_id": "66fd1f2220b529ee37b39ad4",
+                // "username": "Salesforce123",
+                // "password": "$2b$10$ta8cEx0Wp2EuXvCT.dK46OPR1W7K77g9ZNT5P95FGRcSRUiwe.d6q",
+                // "email": "user@Salesforce123.com",
+                // "org_id": "66fd1f2220b529ee37b39ad1",
+                // "isActive": true,
+                // "role": "user",
+                // "createdAt": "2024-10-02T10:23:30.973Z",
+                // "userId": 2,
             }
         });
     } catch (error) {
