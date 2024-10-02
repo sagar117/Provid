@@ -133,7 +133,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,  // Load API key from environment variables
 });
 
-export const openairesponse = async (req, res) => {
+exports.openairesponse = async (req, res) => {
     const { prompt } = req.body;
 
     try {
