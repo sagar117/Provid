@@ -71,7 +71,7 @@ function populateGuidesTable(guides) {
     generateDocButton.textContent = 'Generate Product Doc';
     generateDocButton.className = 'action-btn';
     generateDocButton.addEventListener('click', function() {
-      generateProductDoc(guide._id);
+      generateProductDoc(guide.events);
     });
     actionsCell.appendChild(generateDocButton);
 
@@ -176,7 +176,7 @@ function showFeedback(message, type) {
    async function generateProductDoc(guide) {
     try {
       const prompt = `Create a product document for guide ID ${guide}.`;  // Adjust prompt as needed
-      const response = await fetch('/api/openai', {
+      const response = await fetch('/api/orgs/openai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
