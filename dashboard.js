@@ -23,7 +23,7 @@ async function fetchGuides() {
     console.log('org_id',org_id);
     const response = await fetch(`${apiBaseUrl}/api/orgs/getGuides/${org_id}`);
     const data = await response.json();
-    console.log(guideData,data);
+    console.log(data);
     
     if (response.ok) {
       guides = data;
