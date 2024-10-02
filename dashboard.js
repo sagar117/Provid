@@ -37,33 +37,56 @@ async function fetchGuides() {
 // });
 }
 
-// Populate the table with guides
-function populateGuidesTable(guides) {
-  const tbody = document.getElementById('guides-table-body');
-  tbody.innerHTML = '';  // Clear previous entries
-
-  guides.forEach(guide => {
-    const row = document.createElement('tr');
-
-    row.innerHTML = `
-      <td>${guide.title}</td>
-      <td>${guide.description}</td>
-      <td>
-        <button class="action-btn" onclick="toggleGuideStatus('${guide.id}', true)">
-          <i class="fa fa-check"></i>
-        </button>
-        <button class="action-btn" onclick="toggleGuideStatus('${guide.id}', false)">
-          <i class="fa fa-times"></i>
-        </button>
-        <button class="action-btn" onclick="deleteGuide('${guide.id}')">
-          <i class="fa fa-trash"></i>
-        </button>
-      </td>
-    `;
-
-    tbody.appendChild(row);
+document.addEventListener('DOMContentLoaded', () => {
+    const guidesTableBody = document.getElementById('guides-table-body');
+    const productDocContainer = document.getElementById('product-doc-container');
+    const productDocContent = document.getElementById('product-doc-content');
+  
+    // Function to generate product document for a guide
+    async function generateProductDoc(guide) {
+      try {
+        const response = await fetch('/api/generate-product-doc', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ prompt: `Generate product documentation for: ${guide.title} - ${guide.description}` }),
+        });
+  
+        const data = await response.json();
+        if (data.message) {
+          // Show product document in the container
+          productDocContent.textContent = data.message;
+          productDocContainer.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Error generating product document:', error);
+      }
+    }
+  
+    // Dynamically populate the guides table
+    guides.forEach(guide => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${guide.title}</td>
+        <td>${guide.description}</td>
+        <td>
+          <button class="action-btn" onclick="generateProductDoc(${guide.id})">
+            <i class="fas fa-file-alt"></i> Generate Product Doc
+          </button>
+        </td>
+      `;
+      guidesTableBody.appendChild(row);
+    });
   });
-}
+  
+  // This function would be globally available in the scope so it can be triggered by the button
+  window.generateProductDoc = async (guideId) => {
+    const guide = guides.find(g => g.id === guideId);
+    if (guide) {
+      await generateProductDoc(guide);
+    }
+  };
 
 // Toggle the guide's active status
 async function toggleGuideStatus(guideId, isActive) {
@@ -142,6 +165,8 @@ async function saveGuide() {
     showFeedback('Error saving guide. Please try again.', 'error');
   }
 }
+
+
 
 // Show feedback message
 function showFeedback(message, type) {
