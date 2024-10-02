@@ -128,45 +128,45 @@ async function deleteGuide(guideId) {
   }
 }
 
-// Save a guide (create or update)
-async function saveGuide() {
-  const title = document.getElementById('guide-title').value;
-  const description = document.getElementById('guide-description').value;
+// // Save a guide (create or update)
+// async function saveGuide() {
+//   const title = document.getElementById('guide-title').value;
+//   const description = document.getElementById('guide-description').value;
 
-  if (!title || !description) {
-    showFeedback('Please provide both a title and description.', 'error');
-    return;
-  }
+//   if (!title || !description) {
+//     showFeedback('Please provide both a title and description.', 'error');
+//     return;
+//   }
 
-  const newGuide = {
-    title,
-    description,
-    active: true  // Default status is active
-  };
+//   const newGuide = {
+//     title,
+//     description,
+//     active: true  // Default status is active
+//   };
 
-  try {
-    const response = await fetch(`${apiBaseUrl}/api/guides`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newGuide)
-    });
+//   try {
+//     const response = await fetch(`${apiBaseUrl}/api/guides`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(newGuide)
+//     });
 
-    if (response.ok) {
-      showFeedback('Guide saved successfully!', 'success');
-      document.getElementById('guide-title').value = '';
-      document.getElementById('guide-description').value = '';
-      fetchGuides();  // Refresh the table
-    } else {
-      console.error('Failed to save guide');
-      showFeedback('Error saving guide. Please try again.', 'error');
-    }
-  } catch (error) {
-    console.error('Error saving guide:', error);
-    showFeedback('Error saving guide. Please try again.', 'error');
-  }
-}
+//     if (response.ok) {
+//       showFeedback('Guide saved successfully!', 'success');
+//       document.getElementById('guide-title').value = '';
+//       document.getElementById('guide-description').value = '';
+//       fetchGuides();  // Refresh the table
+//     } else {
+//       console.error('Failed to save guide');
+//       showFeedback('Error saving guide. Please try again.', 'error');
+//     }
+//   } catch (error) {
+//     console.error('Error saving guide:', error);
+//     showFeedback('Error saving guide. Please try again.', 'error');
+//   }
+// }
 
 
 
