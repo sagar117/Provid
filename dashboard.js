@@ -26,7 +26,7 @@ async function fetchGuides() {
     console.log(data);
     
     if (response.ok) {
-      guides = data;
+      guides = [data];
       populateGuidesTable(guides);
     } else {
       console.error('Error fetching guides:', data.message);
@@ -48,7 +48,6 @@ function populateGuidesTable(guides) {
     row.innerHTML = `
       <td>${guide.title}</td>
       <td>${guide.description}</td>
-      <td>${guide.active ? 'Active' : 'Inactive'}</td>
       <td>
         <button class="action-btn" onclick="toggleGuideStatus('${guide.id}', true)">
           <i class="fa fa-check"></i>
