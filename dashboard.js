@@ -36,7 +36,7 @@ async function fetchGuides() {
   }
 // });
 }
-
+function populateGuidesTable(guides) {
 document.addEventListener('DOMContentLoaded', () => {
     const guidesTableBody = document.getElementById('guides-table-body');
     const productDocContainer = document.getElementById('product-doc-container');
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     // Dynamically populate the guides table
+    
     guides.forEach(guide => {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       guidesTableBody.appendChild(row);
     });
   });
+}
   
   // This function would be globally available in the scope so it can be triggered by the button
   window.generateProductDoc = async (guideId) => {
