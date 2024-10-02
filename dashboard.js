@@ -186,7 +186,7 @@ function showFeedback(message, type) {
       });
 
       const result = await response.json();
-      displayGeneratedDoc(result);  // Function to show the generated document
+    //   displayGeneratedDoc(result);  // Function to show the generated document
       productDocContent.textContent = result.message;
     productDocContainer.style.display = 'block';
     console.log("isme aaya",result);
