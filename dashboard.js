@@ -178,8 +178,8 @@ function showFeedback(message, type) {
    async function generateProductDoc(guide) {
     try {
         console.log("isme nhi aaya",guide);
-        const guide = JSON.stringify(guide);
-      const prompt = `Write a product/training document for below recorded steps  ${guide}.`;  // Adjust prompt as needed
+        const tt = JSON.stringify(guide);
+      const prompt = `Write a product/training document for below recorded steps.`+tt;  // Adjust prompt as needed
       const response = await fetch('/api/orgs/openai', {
         method: 'POST',
         headers: {
