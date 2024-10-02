@@ -60,6 +60,16 @@ function populateGuidesTable(guides) {
         </button>
       </td>
     `;
+    const actionsCell = document.createElement('td');
+
+    // Button to generate product document using OpenAI
+    const generateDocButton = document.createElement('button');
+    generateDocButton.textContent = 'Generate Product Doc';
+    generateDocButton.className = 'action-btn';
+    generateDocButton.addEventListener('click', function() {
+      generateProductDoc(guide._id);
+    });
+    actionsCell.appendChild(generateDocButton);
 
     tbody.appendChild(row);
   });
@@ -104,44 +114,44 @@ async function deleteGuide(guideId) {
 }
 
 // Save a guide (create or update)
-async function saveGuide() {
-  const title = document.getElementById('guide-title').value;
-  const description = document.getElementById('guide-description').value;
+// async function saveGuide() {
+//   const title = document.getElementById('guide-title').value;
+//   const description = document.getElementById('guide-description').value;
 
-  if (!title || !description) {
-    showFeedback('Please provide both a title and description.', 'error');
-    return;
-  }
+//   if (!title || !description) {
+//     showFeedback('Please provide both a title and description.', 'error');
+//     return;
+//   }
 
-  const newGuide = {
-    title,
-    description,
-    active: true  // Default status is active
-  };
+//   const newGuide = {
+//     title,
+//     description,
+//     active: true  // Default status is active
+//   };
 
-  try {
-    const response = await fetch(`${apiBaseUrl}/api/guides`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newGuide)
-    });
+//   try {
+//     const response = await fetch(`${apiBaseUrl}/api/guides`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(newGuide)
+//     });
 
-    if (response.ok) {
-      showFeedback('Guide saved successfully!', 'success');
-      document.getElementById('guide-title').value = '';
-      document.getElementById('guide-description').value = '';
-      fetchGuides();  // Refresh the table
-    } else {
-      console.error('Failed to save guide');
-      showFeedback('Error saving guide. Please try again.', 'error');
-    }
-  } catch (error) {
-    console.error('Error saving guide:', error);
-    showFeedback('Error saving guide. Please try again.', 'error');
-  }
-}
+//     if (response.ok) {
+//       showFeedback('Guide saved successfully!', 'success');
+//       document.getElementById('guide-title').value = '';
+//       document.getElementById('guide-description').value = '';
+//       fetchGuides();  // Refresh the table
+//     } else {
+//       console.error('Failed to save guide');
+//       showFeedback('Error saving guide. Please try again.', 'error');
+//     }
+//   } catch (error) {
+//     console.error('Error saving guide:', error);
+//     showFeedback('Error saving guide. Please try again.', 'error');
+//   }
+// }
 
 // Show feedback message
 function showFeedback(message, type) {
@@ -153,4 +163,31 @@ function showFeedback(message, type) {
   setTimeout(() => {
     feedbackElement.style.display = 'none';
   }, 3000);
+
+
 }
+
+
+   // Function to call OpenAI API to generate product document
+   async function generateProductDoc(guide) {
+    try {
+      const prompt = `Create a product document for guide ID ${guide}.`;  // Adjust prompt as needed
+      const response = await fetch('/api/openai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      const result = await response.json();
+      displayGeneratedDoc(result);  // Function to show the generated document
+    } catch (error) {
+      console.error('Error generating product document:', error);
+    }
+  }
+
+  // Function to display the generated document (you can customize this to show it in the UI)
+  function displayGeneratedDoc(doc) {
+    alert('Product document generated: ' + doc.content);  // Placeholder alert, can be styled or shown differently
+  }
