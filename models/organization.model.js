@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
-const Counter = require('../models/counters'); // Import the counter model
+const Counter = require('./counter.model'); // Make sure the path is correct
+
 
 
 const organizationSchema = new mongoose.Schema({
+    orgId: { type: Number, unique: true }, // Incremental org ID
     name: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     description: { type: String, default: '' }, // Optional description of the organization
@@ -12,12 +14,12 @@ const organizationSchema = new mongoose.Schema({
 });
 
 // Before saving, get the next sequence for orgId
-organizationSchema.pre('save', async function(next) {
+organizationSchema.pre('save', async function (next) {
     const organization = this;
 
     if (organization.isNew) {
         try {
-            // Get the next orgId
+            // Get the next orgId sequence from the counter collection
             const counter = await Counter.findByIdAndUpdate(
                 { _id: 'org' },
                 { $inc: { seq: 1 } },
@@ -33,6 +35,7 @@ organizationSchema.pre('save', async function(next) {
         next();
     }
 });
+
 
 const Organization = mongoose.model('Organization', organizationSchema);
 

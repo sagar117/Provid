@@ -4,6 +4,8 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose'); // For MongoDB connection
 require('dotenv').config(); // Load environment variables
+const Counter = require('./models/counter.model');
+
 
 // const config = require('./config/config'); // Configuration file
 const { router: authRoutes } = require('./routes/auth'); // Correct import of auth routes
@@ -22,6 +24,18 @@ app.use(express.static(path.join(__dirname, '/')));
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/yourdbname', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+  async function initializeOrgCounter() {
+    try {
+        const newCounter = new Counter({ _id: 'org', seq: 1 });
+        await newCounter.save();
+        console.log('Organization counter initialized.');
+    } catch (error) {
+        console.error('Error initializing counter:', error);
+    }
+}
+
+initializeOrgCounter();
 
 // Register the authentication routes
 app.use('/api/auth', authRoutes); 

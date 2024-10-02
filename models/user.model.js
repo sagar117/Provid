@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-const Counter = require('../models/counters'); // Import the counter model
+const Counter = require('./counter.model.js'); // Import the counter model
 
 
 const userSchema = new mongoose.Schema({
+    userId: { type: Number, unique: true }, // Incremental user ID
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
