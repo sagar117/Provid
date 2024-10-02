@@ -176,7 +176,7 @@ function showFeedback(message, type) {
    // Function to call OpenAI API to generate product document
    async function generateProductDoc(guide) {
     try {
-      const prompt = `Create a product document for below recorded steps  ${guide}.`;  // Adjust prompt as needed
+      const prompt = `Write a product/training document for below recorded steps  ${guide}.`;  // Adjust prompt as needed
       const response = await fetch('/api/orgs/openai', {
         method: 'POST',
         headers: {
