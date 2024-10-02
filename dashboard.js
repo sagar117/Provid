@@ -186,6 +186,8 @@ function showFeedback(message, type) {
 
       const result = await response.json();
       displayGeneratedDoc(result);  // Function to show the generated document
+      productDocContent.textContent = result.message;
+    productDocContainer.style.display = 'block';
     } catch (error) {
       console.error('Error generating product document:', error);
     }
