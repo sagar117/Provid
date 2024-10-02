@@ -65,16 +65,17 @@ function populateGuidesTable(guides) {
       </td>
     `;
     const actionsCell = document.createElement('td');
+    console.log(guide);
     generateProductDoc(guide.events);
 
-    // Button to generate product document using OpenAI
-    const generateDocButton = document.createElement('button');
-    generateDocButton.textContent = 'Generate Product Doc';
-    generateDocButton.className = 'action-btn';
-    generateDocButton.addEventListener('click', function() {
-      generateProductDoc(guide.events);
-    });
-    actionsCell.appendChild(generateDocButton);
+    // // Button to generate product document using OpenAI
+    // const generateDocButton = document.createElement('button');
+    // generateDocButton.textContent = 'Generate Product Doc';
+    // generateDocButton.className = 'action-btn';
+    // generateDocButton.addEventListener('click', function() {
+    //   generateProductDoc(guide.events);
+    // });
+    // actionsCell.appendChild(generateDocButton);
 
     tbody.appendChild(row);
   });
