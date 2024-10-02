@@ -195,10 +195,10 @@ function showFeedback(message, type) {
     }
   }
 
-  // Function to display the generated document (you can customize this to show it in the UI)
-  function displayGeneratedDoc(doc) {
-    // Show product document in the container
-    productDocContent.textContent = data.message;
-    productDocContainer.style.display = 'block';
-    alert('Product document generated: ' + doc.content);  // Placeholder alert, can be styled or shown differently
-  }
+//   // Function to display the generated document (you can customize this to show it in the UI)
+//   function displayGeneratedDoc(doc) {
+//     // Show product document in the container
+//     productDocContent.textContent = data.message;
+//     productDocContainer.style.display = 'block';
+//     alert('Product document generated: ' + doc.content);  // Placeholder alert, can be styled or shown differently
+//   }
