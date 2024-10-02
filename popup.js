@@ -86,7 +86,11 @@ document.getElementById('login-btn').addEventListener('click', async () => {
         sessionStorage.setItem('refreshToken', data.refreshToken);
         org_name = data.user.org
         showRecorderSection();
-        Getorgdetails(org_name);
+        const org_id = data._id;
+        chrome.storage.local.set({ org_id: data.user.orgId}, function() {
+          console.log('org id is saved.',org_id);
+        });
+        // Getorgdetails(org_name);
 
         // Redirect user to dashboard or homepage
         // window.location.href = '/dashboard.html';

@@ -37,6 +37,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
                 //   console.log('Auth token is saved.');
                 // });
                 sessionStorage.setItem('refreshToken', data.refreshToken);
+                localStorage.setItem('org_id',data.user.orgId);
                 // org_name = data.user.org
     
             // Call the /me API to get user details
@@ -63,7 +64,7 @@ const apiBaseUrl = 'http://34.71.54.137:3000';  // Replace with your actual serv
             // }, function() {
             //     console.log('User and Organization details saved');
             // });
-            localStorage.setItem('org_id',userData.user.id);
+            // localStorage.setItem('org_id',userData.user.id);
 
             // chrome.storage.local.set({ authToken: authToken }, function() {
             //     console.log('Auth token is saved.');
