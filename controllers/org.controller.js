@@ -127,16 +127,14 @@ exports.getOrgdetails =async(req,res) => {
     }
 };
 
-exports.openairesponse =async(req,res) =>{
+exports.openairesponse = async (req, res) => {
     const { prompt } = req.body;
 
     const data = JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [
-            { role: "user", 
-            content: prompt
-        }
-        ],
+            { role: "user", content: prompt }
+        ]
     });
 
     const options = {
@@ -150,33 +148,40 @@ exports.openairesponse =async(req,res) =>{
         },
     };
 
-    return new Promise((resolve, reject) => {
-        const req = https.request(options, (res) => {
-            let responseData = '';
+    const request = https.request(options, (response) => {
+        let responseData = '';
 
-            res.on('data', (chunk) => {
-                responseData += chunk;
-            });
+        // Collect the data
+        response.on('data', (chunk) => {
+            responseData += chunk;
+        });
 
-            res.on('end', () => {
+        // Once the data collection is complete
+        response.on('end', () => {
+            try {
                 const parsedData = JSON.parse(responseData);
                 if (parsedData && parsedData.choices && parsedData.choices.length > 0) {
-                    resolve(parsedData.choices[0].message);
-                    res.status(200).json(data);
+                    // Send the OpenAI API response back to the user
+                    res.status(200).json(parsedData.choices[0].message);
                 } else {
-                    reject(new Error("Invalid response from OpenAI API"));
+                    res.status(500).json({ error: "Invalid response from OpenAI API" });
                 }
-            });
+            } catch (error) {
+                // Handle JSON parse errors
+                res.status(500).json({ error: "Failed to parse OpenAI API response" });
+            }
         });
-
-        req.on('error', (error) => {
-            reject(error);
-        });
-
-        // req.write(data);
-        req.end();
     });
 
+    // Handle request errors
+    request.on('error', (error) => {
+        console.error('Error with the OpenAI API request:', error);
+        res.status(500).json({ error: 'API request failed' });
+    });
+
+    // Write the data and end the request
+    request.write(data);
+    request.end();
 };
 
 
