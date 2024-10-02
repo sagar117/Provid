@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchGuides();
   
   // Handle guide saving (for new and edited guides)
-  document.getElementById('save-guide-btn').addEventListener('click', saveGuide);
+//   document.getElementById('save-guide-btn').addEventListener('click', saveGuide);
 });
 
 // Fetch guides from the backend
@@ -37,11 +37,13 @@ async function fetchGuides() {
 // });
 }
 
+const productDocContainer = document.getElementById('product-doc-container');
+const productDocContent = document.getElementById('product-doc-content');
+
 // Populate the table with guides
 function populateGuidesTable(guides) {
   const tbody = document.getElementById('guides-table-body');
-  const productDocContainer = document.getElementById('product-doc-container');
-  const productDocContent = document.getElementById('product-doc-content');
+
   tbody.innerHTML = '';  // Clear previous entries
 
   guides.forEach(guide => {
