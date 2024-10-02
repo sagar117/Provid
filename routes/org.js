@@ -12,6 +12,7 @@ router.get('/getGuides/:organization', orgController.getorgguides);
 // router.put('/guides/:guideId/status',orgController.updateguidestaus);
 
 router.get('/organization/:name', orgController.getOrgdetails);
+router.post('/openai',orgController.openairesponse);
 
 
 

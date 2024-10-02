@@ -4,6 +4,8 @@ const Guide = require('../models/Guides'); // Import the User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Organization = require('../models/organization.model');
+require('dotenv').config();
+const apiKey = process.env.apiKey;
 
 
 // Create an organization and a user simultaneously
@@ -120,6 +122,58 @@ exports.getOrgdetails =async(req,res) => {
         res.status(500).json({ message: 'Error fetching organization', error });
 
     }
+};
+
+exports.openairesponse =async(req,res) =>{
+    const { prompt } = req.body;
+
+    const data = JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+            { role: "user", 
+            content: prompt
+        }
+        ],
+    });
+
+    const options = {
+        hostname: 'api.openai.com',
+        path: '/v1/chat/completions',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': data.length,
+            'Authorization': `Bearer ${apiKey}`,
+        },
+    };
+
+    return new Promise((resolve, reject) => {
+        const req = https.request(options, (res) => {
+            let responseData = '';
+
+            res.on('data', (chunk) => {
+                responseData += chunk;
+            });
+
+            res.on('end', () => {
+                const parsedData = JSON.parse(responseData);
+                if (parsedData && parsedData.choices && parsedData.choices.length > 0) {
+                    resolve(parsedData.choices[0].message);
+                    res.status(200).json(data);
+                } else {
+                    reject(new Error("Invalid response from OpenAI API"));
+                }
+            });
+        });
+
+        req.on('error', (error) => {
+            reject(error);
+        });
+
+        // req.write(data);
+        req.end();
+    });
+
 };
 
 
