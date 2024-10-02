@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchGuides();
   
   // Handle guide saving (for new and edited guides)
-  document.getElementById('save-guide-btn').addEventListener('click', saveGuide);
+//   document.getElementById('save-guide-btn').addEventListener('click', saveGuide);
 });
 
 // Fetch guides from the backend
