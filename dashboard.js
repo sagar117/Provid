@@ -26,7 +26,7 @@ async function fetchGuides() {
     console.log(data);
     
     if (response.ok) {
-      guides = [data];
+      guides = data;
       populateGuidesTable(guides);
     } else {
       console.error('Error fetching guides:', data.message);
