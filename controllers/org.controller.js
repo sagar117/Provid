@@ -98,7 +98,7 @@ exports.getorgguides =async (req,res) => {
     console.log(organization);
 
     try {
-        const org_guide = await Guide.findOne({ organization });
+        const org_guide = await Guide.find({ organization });
         if (!org_guide) {
             return res.status(404).json({ message: 'No guide present for this org' });
         }
