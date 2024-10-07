@@ -45,13 +45,9 @@ function populateGuidesTable(guides) {
   const tbody = document.getElementById('guides-table-body');
 
   tbody.innerHTML = '';  // Clear previous entries
-  
 
   guides.forEach(guide => {
     const row = document.createElement('tr');
-    const actionsCell = document.createElement('td');
-    console.log(guide.events);
-    // generateProductDoc(guide.events);
 
     row.innerHTML = `
       <td>${guide.title}</td>
@@ -67,13 +63,11 @@ function populateGuidesTable(guides) {
           <i class="fa fa-trash"></i>
         </button>
       </td>
-      <td>
-      <button class="action-btn" onclick="generateProductDoc('${guide.events}')">
-      <i class="fa fa-trash"></i>
-    </button>
-      </td>
+      <td></td>
     `;
-
+    const actionsCell = document.createElement('td');
+    console.log(guide.events);
+    generateProductDoc(guide.events);
 
     // // Button to generate product document using OpenAI
     // const generateDocButton = document.createElement('button');
