@@ -16,7 +16,7 @@
 
   "content_scripts": [
       {
-        "matches": ["https://www.stodict.com/","http://localhost:3000/","http://localhost:3000/demo","http://34.71.54.137:3000/demo2","http://34.71.54.137:3000/demo3","http://34.71.54.137:3000/demo4","http://34.71.54.137:3000/demo","https://us-staging.spryhealth.care/"],
+        "matches": ["https://www.stodict.com/","http://localhost:3000/","http://localhost:3000/demo","http://34.71.54.137:3000/demo2","http://34.71.54.137:3000/demo3","http://34.71.54.137:3000/demo4","http://34.71.54.137:3000/demo","https://us-staging.spryhealth.care/","https://us-staging.spryhealth.care/appointments"],
         "js": ["content.js"]
       }
     ],

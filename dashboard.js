@@ -179,7 +179,7 @@ function showFeedback(message, type) {
     try {
         console.log("isme nhi aaya",guide);
         const tt = JSON.stringify(guide);
-      const prompt = `Write a product/training document for below recorded steps.`+tt;  // Adjust prompt as needed
+      const prompt = `Write a product/training document for below recorded steps. give step by step guide so user can undesand don' include xpath & coordinaes`+tt;  // Adjust prompt as needed
       const response = await fetch('/api/orgs/openai', {
         method: 'POST',
         headers: {
