@@ -90,6 +90,7 @@
             border-radius: 5px;
             font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .hero-image img {
@@ -170,6 +171,49 @@
             color: #777;
         }
 
+        /* Waitlist Form */
+        .waitlist-section {
+            padding: 50px;
+            background-color: #f7f9f9;
+            text-align: center;
+        }
+
+        .waitlist-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .waitlist-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .waitlist-form input, .waitlist-form select {
+            margin-bottom: 15px;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #2a9d8f;
+            border-radius: 5px;
+        }
+
+        .waitlist-form button {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -204,6 +248,26 @@
             }
         }
     </style>
+
+    <script>
+        function validateForm() {
+            const emailField = document.getElementById("email");
+            const emailValue = emailField.value;
+            const emailError = document.getElementById("emailError");
+
+            // Simple email validation pattern
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (!emailPattern.test(emailValue)) {
+                emailError.textContent = "Please enter a valid email address.";
+                return false;
+            } else {
+                emailError.textContent = "";
+                return true;
+            }
+        }
+    </script>
+
 </head>
 <body>
 
@@ -216,7 +280,7 @@
                 <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#get-started" class="cta">Get Started</a></li>
+                <li><a href="#waitlist" class="cta">Waitlist</a></li>
             </ul>
         </nav>
     </header>
@@ -226,7 +290,7 @@
         <div class="hero-content">
             <h1>Replace Product Tutorials with Seamless In-App Guides</h1>
             <p>Empower your users with interactive guides directly within your application. No more outdated tutorials or lengthy videos.</p>
-            <a href="#get-started" class="btn-primary">Try It Now</a>
+            <a href="#waitlist" class="btn-primary">Join Waitlist</a>
         </div>
         <div class="hero-image">
             <img src="hero-demo.gif" alt="Product Demo">
@@ -262,31 +326,64 @@
         <div class="features-container">
             <div class="feature-item">
                 <i class="fas fa-record-vinyl fa-3x"></i>
-                <h3>Record Interactions</h3>
-                <p>Easily record your feature walkthroughs with our intuitive browser extension.</p>
+                <h3>Seamless Recording</h3>
+                <p>Record user interactions in your product and create step-by-step guides effortlessly.</p>
             </div>
             <div class="feature-item">
-                <i class="fas fa-save fa-3x"></i>
-                <h3>Save & Manage Guides</h3>
-                <p>Organize your guides in one place and access them at any time.</p>
+                <i class="fas fa-code fa-3x"></i>
+                <h3>Easy Integration</h3>
+                <p>Integrate guides with a simple JavaScript snippet. No complex setup required.</p>
             </div>
             <div class="feature-item">
-                <i class="fas fa-chart-bar fa-3x"></i>
-                <h3>Analytics</h3>
-                <p>Track user engagement and interactions to improve your product’s UX.</p>
+                <i class="fas fa-user-clock fa-3x"></i>
+                <h3>Personalized User Onboarding</h3>
+                <p>Tailor each guide to specific user roles and functions within your app.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-chart-line fa-3x"></i>
+                <h3>Analytics & Insights</h3>
+                <p>Track how users interact with your guides and optimize for better engagement.</p>
             </div>
         </div>
     </section>
 
+    <!-- Waitlist Form -->
+    <section id="waitlist" class="waitlist-section">
+        <h2>Join Our Waitlist</h2>
+        <p>Get early access to the next generation of in-app guides. Be the first to try Feature Recorder!</p>
+        <form class="waitlist-form" onsubmit="return validateForm();">
+            <input type="text" id="first-name" name="first-name" placeholder="First Name" required>
+            <input type="text" id="last-name" name="last-name" placeholder="Last Name" required>
+            <input type="text" id="company-name" name="company-name" placeholder="Company Name" required>
+
+            <input type="email" name="email" id="email" placeholder="Your Email" required>
+            <span id="emailError" class="error"></span>
+
+            <select name="designation" required>
+                <option value="">Your Designation</option>
+                <option value="CEO">CEO</option>
+                <option value="Product Manager">Product Manager</option>
+                <option value="Customer Success">Customer Success</option>
+                <option value="Sales Manager">Sales Manager</option>
+                <option value="Marketing Manager">Marketing Manager</option>
+            </select>
+
+            <select name="helpArea" required>
+                <option value="">In which area should we help you?</option>
+                <option value="Onboarding & Training">Onboarding & Training</option>
+                <option value="Customer Support">Customer Support</option>
+                <option value="Product Adoption">Product Adoption</option>
+                <option value="Feature Discovery">Feature Discovery</option>
+            </select>
+
+            <button type="submit">Join Waitlist</button>
+        </form>
+    </section>
+
     <!-- Footer -->
     <footer>
-        <p>Feature Recorder © 2024 | All Rights Reserved</p>
+        <p>&copy; 2024 Feature Recorder. All Rights Reserved.</p>
     </footer>
-
-    <!-- Scripts -->
-    <script>
-        // Placeholder for interactive scripts if needed
-    </script>
 
 </body>
 </html>
