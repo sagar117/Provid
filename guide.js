@@ -117,18 +117,43 @@ function guideUserThroughSteps(events) {
 
 // Function to highlight the element where the interaction happened
 function highlightElement(element, x, y, text) {
-  // Create a visual cursor or highlight effect
+  // Create a visual cursor with concentric circles
   const cursor = document.createElement('div');
   cursor.style.position = 'absolute';
-  cursor.style.width = '20px';
-  cursor.style.height = '20px';
+  cursor.style.width = '40px';
+  cursor.style.height = '40px';
   cursor.style.borderRadius = '50%';
-  cursor.style.border = '2px solid red';
-  cursor.style.top = `${y}px`;
-  cursor.style.left = `${x}px`;
+  cursor.style.top = `${y - 20}px`;  // Centered on the element
+  cursor.style.left = `${x - 20}px`;
   cursor.style.zIndex = '9999';
+  cursor.style.border = '2px solid rgba(0, 150, 255, 0.75)';  // Outer circle
+  cursor.classList.add('wave-cursor');
 
   document.body.appendChild(cursor);
+
+  // CSS animation for the wave effect
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .wave-cursor {
+      animation: waveAnimation 1.5s infinite ease-in-out;
+    }
+
+    @keyframes waveAnimation {
+      0% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 
   // Create a text box to show next to the cursor
   const guideText = document.createElement('div');
@@ -140,7 +165,7 @@ function highlightElement(element, x, y, text) {
   guideText.style.fontSize = '14px';
   guideText.style.zIndex = '9999';
   guideText.style.top = `${y}px`;
-  guideText.style.left = `${x + 50}px`; // Text displayed 30px to the right of the cursor
+  guideText.style.left = `${x + 50}px`; // Text displayed 50px to the right of the cursor
 
   guideText.textContent = text || 'Step';
 
