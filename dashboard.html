@@ -10,139 +10,121 @@
     <style>
       body {
         font-family: 'Sans-serif';
-        background-color: white;
+        background-color: #f9f9f9;
         color: #333;
         margin: 0;
-        padding: 20px;
+        padding: 0;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       h2 {
         color: #2a9d8f;
         text-align: center;
         font-weight: bold;
-        margin-bottom: 30px;
+        margin: 30px 0 20px;
       }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-      }
-
-      table th, table td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-
-      table th {
-        background-color: #2a9d8f;
-        color: white;
-      }
-
-      .action-btn {
-        padding: 5px;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        font-size: 18px;
-        margin-right: 5px;
-      }
-
-      .action-btn .fa {
-        color: #2a9d8f;
-      }
-
-      .action-btn .fa-times {
-        color: #f4a261;
-      }
-
-      .action-btn .fa-trash {
-        color: #ff5e57;
-      }
-
-      .guide-form {
-        background-color: #f4f4f4;
-        padding: 20px;
-        border-radius: 8px;
+      .search-bar {
+        width: 80%;
+        max-width: 600px;
         margin-bottom: 20px;
       }
 
-      input, textarea {
+      .search-bar input {
         width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 14px;
-      }
-
-      button {
-        background-color: #2a9d8f;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+        padding: 15px;
         font-size: 16px;
-        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 50px;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        outline: none;
       }
 
-      button:disabled {
-        background-color: #ccc;
+      .guides-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        width: 90%;
+        max-width: 1200px;
+        padding: 20px;
       }
 
-      .alert {
+      .guide-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .guide-card h3 {
+        margin: 0;
+        color: #2a9d8f;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .guide-card p {
         margin: 10px 0;
-        padding: 10px;
-        border-radius: 5px;
         font-size: 14px;
+        color: #666;
       }
 
-      .alert.success {
-        background-color: #2a9d8f;
-        color: white;
+      .guide-card .action-btns {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
       }
 
-      .alert.error {
-        background-color: #ff5e57;
-        color: white;
+      .action-btn {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      .action-btn .fa-edit {
+        color: #2a9d8f;
+      }
+
+      .action-btn .fa-trash {
+        color: #e74c3c;
+      }
+
+      .product-doc-container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 30px 0;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 800px;
       }
     </style>
   </head>
   <body>
     <h2>Guide Management Dashboard</h2>
 
-    <!-- Add/Edit Guide Form
-    <div class="guide-form">
-      <h3>Create/Edit Guide</h3>
-      <input type="text" id="guide-title" placeholder="Guide Title">
-      <textarea id="guide-description" placeholder="Guide Description"></textarea>
-      <button id="save-guide-btn">Save Guide</button>
-      <p id="guide-feedback" class="alert" style="display: none;"></p>
-    </div> -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="search-guides" placeholder="Search guides...">
+    </div>
 
-    <!-- Guides Table -->
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <!-- <th>Status</th> -->
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="guides-table-body">
-        <!-- Guides will be dynamically populated here -->
-      </tbody>
-    </table>
+    <!-- Guides Container (Cards) -->
+    <div id="guides-container" class="guides-container">
+      <!-- Guide cards will be dynamically populated here -->
+    </div>
 
-        <!-- Product Document Container -->
-        <div id="product-doc-container" class="product-doc-container">
-            <h3>Generated Product Document</h3>
-            <pre id="product-doc-content"></pre>
-          </div>
+    <!-- Product Document Container -->
+    <div id="product-doc-container" class="product-doc-container" style="display:none;">
+      <h3>Generated Product Document</h3>
+      <pre id="product-doc-content"></pre>
+    </div>
 
     <script src="dashboard.js"></script>
   </body>
