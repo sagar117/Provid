@@ -22,6 +22,7 @@ exports.addtowaitlist = async (req, res) => {
         });
 
         // Save the entry to the database
+        console.log(newEntry);
         await newEntry.save();
 
         // Respond with success
