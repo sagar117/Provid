@@ -12,6 +12,8 @@ const { router: authRoutes } = require('./routes/auth'); // Correct import of au
 // const { router: orgRoutes } = require('./routes/auth'); // Correct import of auth routes
 
 const orgRoutes = require('./routes/org'); // Import organization routes
+const waitlist = require('./routes/waitlist'); // Import organization routes
+
 
 const app = express();
 
@@ -42,6 +44,8 @@ app.use('/api/auth', authRoutes);
 // Register the organization routes
 app.use('/api/orgs', orgRoutes); 
 
+// Register the waitlist routes
+app.use('/api/waitlist', waitlist);
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
