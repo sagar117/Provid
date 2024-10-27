@@ -1,4 +1,4 @@
-const User = require('../models/waitlist.model'); // Import the User model
+const Waitlist = require('../models/waitlist.model'); // Import the User model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Organization = require('../models/organization.model');
