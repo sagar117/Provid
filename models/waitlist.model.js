@@ -2,13 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const app = express();
-app.use(bodyParser.json()); // To parse incoming JSON requests
+// const app = express();
+// app.use(bodyParser.json()); // To parse incoming JSON requests
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/waitlistDB', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+// // Connect to MongoDB
+// mongoose.connect('mongodb://localhost:27017/waitlistDB', { useNewUrlParser: true, useUnifiedTopology: true })
+//     .then(() => console.log('MongoDB connected'))
+//     .catch(err => console.log(err));
 
 // Create a Mongoose Schema for the waitlist
 const waitlistSchema = new mongoose.Schema({
