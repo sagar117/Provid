@@ -22,31 +22,31 @@ const waitlistSchema = new mongoose.Schema({
 });
 
 
-// API endpoint to handle waitlist form submission
-app.post('/api/waitlist', async (req, res) => {
-    const { firstName, lastName, companyName, email, designation, helpArea } = req.body;
+// // API endpoint to handle waitlist form submission
+// app.post('/waitlist', async (req, res) => {
+//     const { firstName, lastName, companyName, email, designation, helpArea } = req.body;
 
-    try {
-        // Create a new entry in the waitlist
-        const newEntry = new Waitlist({
-            firstName,
-            lastName,
-            companyName,
-            email,
-            designation,
-            helpArea
-        });
+//     try {
+//         // Create a new entry in the waitlist
+//         const newEntry = new Waitlist({
+//             firstName,
+//             lastName,
+//             companyName,
+//             email,
+//             designation,
+//             helpArea
+//         });
 
-        // Save the entry to the database
-        await newEntry.save();
+//         // Save the entry to the database
+//         await newEntry.save();
 
-        // Respond with success
-        res.json({ success: true });
-    } catch (error) {
-        console.error(error);
-        res.json({ success: false });
-    }
-});
+//         // Respond with success
+//         res.json({ success: true });
+//     } catch (error) {
+//         console.error(error);
+//         res.json({ success: false });
+//     }
+// });
 
 
 const Waitlist = mongoose.model('Waitlist', waitlistSchema);
