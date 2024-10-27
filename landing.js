@@ -1,4 +1,4 @@
-    document.getElementById('waitlist-form').addEventListener('submit', function(event) {
+    document.getElementById('waitlistForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent form submission
 
         const formData = {
